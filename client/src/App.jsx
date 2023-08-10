@@ -8,7 +8,7 @@ function App() {
   const theme = createTheme({
     typography: {
       fontFamily: [
-        "Neue Plak UA",
+        "Saira Condensed",
         "Helvetica Neue",
         "Helvetica",
         "Arial",
@@ -16,6 +16,9 @@ function App() {
       ].join(","),
       fontSize: 16,
       color: "#ff0000",
+      h6: {
+        fontWeight: 800,
+      },
     },
   });
 
