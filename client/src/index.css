@@ -1,0 +1,12 @@
+@font-face {
+  font-family: "Neue Plak UA";
+  src: url("./assets/font/NeuePlak-Black.ttf") format("truetype"),
+    url("./assets/font/NeuePlak-Bold.ttf") format("truetype"),
+    url("./assets/font/NeuePlak-ExtraBlack.ttf") format("truetype"),
+    url("./assets/font/NeuePlak-Light.ttf") format("truetype"),
+    url("./assets/font/NeuePlak-Regular.ttf") format("truetype"),
+    url("./assets/font/NeuePlak-SemiBold.ttf") format("truetype"),
+    url("./assets/font/NeuePlak-Thin.ttf") format("truetype"),
+    url("./assets/font/NeuePlak-UltraLight.ttf") format("truetype"),
+    url("./assets/font/NeuePlakText-Regular.ttf") format("truetype");
+}
