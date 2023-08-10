@@ -62,6 +62,7 @@ const Navbar = () => {
                   px: 2.4,
                   fontSize: "18px",
                   fontWeight: "500",
+                  height: "100%",
                 }}
               >
                 <NavLink
