@@ -8,16 +8,19 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import StyledButton from "../Button";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import { useEffect, useLayoutEffect, useRef } from "react";
 
 const navItems = [
   {
     to: "/workouts",
     text: "Workouts",
+    subs: ["Dashboard"],
   },
   {
     to: "/community",
     text: "Community",
+    subs: ["Activity Feed", "Challenges"],
   },
 ];
 
@@ -53,7 +56,9 @@ const Navbar = () => {
           <Typography variant="h6" component="span">
             Fit Tracker
           </Typography>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
+          <Box
+            sx={{ display: "flex", alignItems: "center", alignSelf: "stretch" }}
+          >
             {navItems.map((item, idx) => (
               <Typography
                 key={idx}
@@ -62,7 +67,7 @@ const Navbar = () => {
                   px: 2.4,
                   fontSize: "18px",
                   fontWeight: "500",
-                  height: "100%",
+                  position: "relative",
                 }}
               >
                 <NavLink
@@ -71,6 +76,22 @@ const Navbar = () => {
                 >
                   {item.text}
                 </NavLink>
+                <Box
+                  sx={{
+                    display: "none",
+                    position: "absolute",
+                    backgroundColor: "#fff",
+                    width: "92px",
+                    boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
+                    zIndex: 1,
+                  }}
+                >
+                  {item.subs.map((sub, index) => (
+                    <NavLink to="/" key={index}>
+                      {sub}
+                    </NavLink>
+                  ))}
+                </Box>
               </Typography>
             ))}
           </Box>
