@@ -7,8 +7,9 @@ import {
   Button,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import StyledButton from "../Button";
+import StyledButton from "../StyledButton";
 import { NavLink } from "react-router-dom";
+import { grey } from "@mui/material/colors";
 import { useEffect, useLayoutEffect, useRef } from "react";
 
 const navItems = [
@@ -57,42 +58,64 @@ const Navbar = () => {
             Fit Tracker
           </Typography>
           <Box
-            sx={{ display: "flex", alignItems: "center", alignSelf: "stretch" }}
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              position: "relative",
+            }}
           >
             {navItems.map((item, idx) => (
-              <Typography
+              <Box
                 key={idx}
                 sx={{
                   mr: 1,
+                  height: "100%",
                   px: 2.4,
                   fontSize: "18px",
                   fontWeight: "500",
-                  position: "relative",
+                  "&:hover .dropdown-subs": { display: "block" },
+                  alignSelf: "stretch",
                 }}
               >
-                <NavLink
-                  to={item.to}
-                  style={{ textDecoration: "none", color: "#000" }}
+                <Typography
+                  sx={{
+                    textDecoration: "none",
+                    color: "#000",
+                  }}
                 >
-                  {item.text}
-                </NavLink>
+                  <NavLink to={item.to}>{item.text}</NavLink>
+                </Typography>
                 <Box
+                  className="dropdown-subs"
                   sx={{
                     display: "none",
                     position: "absolute",
                     backgroundColor: "#fff",
-                    width: "92px",
-                    boxShadow: "0px 8px 16px 0px rgba(0,0,0,0.2)",
+                    minWidth: "160px",
+                    boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
+                    p: "12px 16px",
                     zIndex: 1,
+                    borderRadius: "2px",
                   }}
                 >
                   {item.subs.map((sub, index) => (
-                    <NavLink to="/" key={index}>
+                    <NavLink
+                      to="/"
+                      key={index}
+                      style={{
+                        textDecoration: "none",
+                        color: "inherit",
+                        fontSize: "16px",
+                        "&:hover": {
+                          fontWeight: 600,
+                        },
+                      }}
+                    >
                       {sub}
                     </NavLink>
                   ))}
                 </Box>
-              </Typography>
+              </Box>
             ))}
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
