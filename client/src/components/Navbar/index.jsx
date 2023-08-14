@@ -1,16 +1,7 @@
-import {
-  Box,
-  AppBar,
-  Toolbar,
-  IconButton,
-  Typography,
-  Button,
-} from "@mui/material";
+import { Box, AppBar, Toolbar, IconButton, Typography } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import StyledButton from "../StyledButton";
 import { NavLink } from "react-router-dom";
-import { grey } from "@mui/material/colors";
-import { useEffect, useLayoutEffect, useRef } from "react";
 
 const navItems = [
   {
@@ -34,7 +25,6 @@ const Navbar = () => {
         color="inherit"
         sx={{
           boxShadow: "none",
-          borderBottom: "1px solid red",
           maxWidth: "1440px",
           mx: "auto",
         }}
@@ -61,7 +51,6 @@ const Navbar = () => {
             sx={{
               display: "flex",
               alignItems: "center",
-              position: "relative",
             }}
           >
             {navItems.map((item, idx) => (
@@ -69,19 +58,20 @@ const Navbar = () => {
                 key={idx}
                 sx={{
                   mr: 1,
-                  height: "100%",
                   px: 2.4,
                   fontSize: "18px",
                   fontWeight: "500",
                   "&:hover .dropdown-subs": { display: "block" },
                   alignSelf: "stretch",
+                  position: "relative",
                 }}
               >
                 <Typography
                   sx={{
-                    textDecoration: "none",
+                    fontWeight: "500",
+                    "& a": { textDecoration: "none" },
                     "&:hover": {
-                      fontWeight: "",
+                      fontWeight: "600",
                     },
                   }}
                 >
@@ -121,17 +111,8 @@ const Navbar = () => {
             ))}
           </Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Button
-              sx={{
-                color: "#000",
-                fontWeight: 700,
-                fontSize: "18px",
-                mr: "10px",
-              }}
-            >
-              LOG IN
-            </Button>
-            <StyledButton>SIGN UP</StyledButton>
+            <StyledButton type="light">LOG IN</StyledButton>
+            <StyledButton type="dark">SIGN UP</StyledButton>
           </Box>
         </Toolbar>
       </AppBar>

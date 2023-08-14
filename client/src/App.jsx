@@ -16,6 +16,7 @@ function App() {
       ].join(","),
       fontSize: 16,
       color: "#ff0000",
+      fontWeight: 400,
       h6: {
         fontWeight: 800,
       },
