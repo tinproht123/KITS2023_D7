@@ -80,7 +80,9 @@ const Navbar = () => {
                 <Typography
                   sx={{
                     textDecoration: "none",
-                    color: "#000",
+                    "&:hover": {
+                      fontWeight: "",
+                    },
                   }}
                 >
                   <NavLink to={item.to}>{item.text}</NavLink>
