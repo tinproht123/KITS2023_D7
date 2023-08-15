@@ -31,6 +31,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @Column(nullable = false)
     @NotEmpty(message = "First_name is not null")
     private String firstName;
 
@@ -47,7 +48,7 @@ public class User {
 
     @Column(nullable = false)
     @NotEmpty(message = "Password is not null")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$")
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$")
     private String password;
 
     @Column
@@ -64,15 +65,15 @@ public class User {
     @Column
     private String country;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     @DecimalMin("0.01")
     private BigDecimal weight;
 
-    @Column(nullable = false)
+//    @Column(nullable = false)
     @DecimalMin("0.01")
     private BigDecimal height;
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "varchar(255) DEFAULT './blank-profile-picture.png'")
     private String image;
 
     @OneToMany(mappedBy = "user")
@@ -108,7 +109,9 @@ public class User {
     )
     private List<Achievement> achievements = new ArrayList<>();
 
-    public User(String username, String email, String password) {
+    public User(String firstName, String lastName, String username, String email, String password) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
