@@ -1,8 +1,16 @@
-import { CssBaseline, createTheme, Box } from "@mui/material";
-import { ThemeProvider } from "@emotion/react";
+import { CssBaseline, Box } from "@mui/material";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home";
 import Navbar from "./components/Navbar";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faPersonRunning,
+  faRoad,
+  faUserGroup,
+} from "@fortawesome/free-solid-svg-icons";
+
+library.add(faPersonRunning, faRoad, faUserGroup);
 
 function App() {
   const theme = createTheme({
@@ -15,7 +23,7 @@ function App() {
         "sans-serif",
       ].join(","),
       fontSize: 16,
-      color: "#ff0000",
+      color: "red",
       fontWeight: 400,
       h6: {
         fontWeight: 800,

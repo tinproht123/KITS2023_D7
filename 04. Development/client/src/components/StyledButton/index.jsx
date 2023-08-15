@@ -8,7 +8,7 @@ const StyledButton = styled(Button)(({ type }) => ({
   fontWeight: 700,
   fontSize: "16px",
   padding: "4px 30px 8px",
-  borderRadius: "1px",
+  borderRadius: "2px",
   "&:hover": {
     backgroundColor: `${type === "dark" ? grey[700] : grey[400]}`,
   },

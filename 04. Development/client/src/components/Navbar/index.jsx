@@ -44,9 +44,7 @@ const Navbar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="span">
-            Fit Tracker
-          </Typography>
+          <img src="/public/images/brand.svg" alt="logo" width="180px" />
           <Box
             sx={{
               display: "flex",
