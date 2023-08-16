@@ -49,6 +49,8 @@ public class User {
     @Column(nullable = false)
     @NotEmpty(message = "Password is not null")
 //    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$")
+//    @Pattern(regexp = "^[a-zA-Z0-9]{8,16}$")
+//    @Pattern(regexp = "^[a-zA-Z0-9]{6,}$")
     private String password;
 
     @Column
@@ -87,13 +89,8 @@ public class User {
     )
     private List<User> friends = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(
-            name = "user_challenges",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "challenge_id")
-    )
-    private List<Challenge> challenges = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<UserChallenge> challenges = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(  name = "user_roles",
