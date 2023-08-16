@@ -5,12 +5,39 @@ import HomePage from "./pages/Home";
 import Navbar from "./components/Navbar";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faAngleDown,
+  faBars,
   faPersonRunning,
   faRoad,
   faUserGroup,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFacebookF,
+  faInstagram,
+  faXTwitter,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import Footer from "./components/Footer.jsx";
+import SignUp from "./pages/SignUp";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
-library.add(faPersonRunning, faRoad, faUserGroup);
+library.add(
+  faPersonRunning,
+  faRoad,
+  faUserGroup,
+  faInstagram,
+  faFacebookF,
+  faXTwitter,
+  faYoutube,
+  faX,
+  faBars,
+  faAngleDown,
+  faEye,
+  faEyeSlash
+);
 
 function App() {
   const theme = createTheme({
@@ -33,21 +60,27 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Navbar />
-        <Box
-          sx={{
-            w: "100%",
-            maxWidth: "1440px",
-            mx: "auto",
-          }}
-        >
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-          </Routes>
-        </Box>
-      </BrowserRouter>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CssBaseline />
+        <BrowserRouter>
+          <Navbar />
+          <Box
+            sx={{
+              w: "100%",
+              maxWidth: "1440px",
+              mx: "auto",
+            }}
+          >
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/auth">
+                <Route path="signup" element={<SignUp />} />
+              </Route>
+            </Routes>
+          </Box>
+          <Footer />
+        </BrowserRouter>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }
