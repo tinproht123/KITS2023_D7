@@ -1,12 +1,17 @@
 package com.example.fittracker.service;
 
 import com.example.fittracker.exception.ResourceNotFoundException;
+import com.example.fittracker.exception.UserDataNotPairingException;
 import com.example.fittracker.model.Workout;
 import com.example.fittracker.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class WorkoutService {
@@ -41,5 +46,16 @@ public class WorkoutService {
         Workout workout = workoutRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         workoutRepository.delete(workout);
+    }
+
+    public List<Workout> getWorkoutsByUserId(Long userId) {
+        return workoutRepository.findAllByUser_UserId(userId);
+    }
+
+    public List<Workout> getAllWorkoutsByMonthAndYear(int year, int month) {
+        LocalDate startDate = LocalDate.of(year, month, 1);
+        LocalDate endDate = startDate.withDayOfMonth(startDate.lengthOfMonth());
+
+        return workoutRepository.findWorkoutsByTimeRange(startDate.atStartOfDay(), endDate.atTime(LocalTime.MAX));
     }
 }

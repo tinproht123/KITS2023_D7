@@ -1,4 +1,6 @@
 package com.example.fittracker.security;
+
+import com.example.fittracker.model.ERole;
 import com.example.fittracker.security.jwt.AuthEntryPointJwt;
 import com.example.fittracker.security.jwt.AuthTokenFilter;
 import com.example.fittracker.security.service.UserDetailsServiceImpl;
@@ -10,6 +12,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +24,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 // (securedEnabled = true,
 // jsr250Enabled = true,
 // prePostEnabled = true) // by default
+@EnableWebSecurity
 public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
     @Autowired
     UserDetailsServiceImpl userDetailsService;
@@ -55,15 +59,25 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
-                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/api/test/**").permitAll()
-                                .requestMatchers("/api/admin/**").hasAuthority(String.valueOf("ROLE_USER"))
-                                .anyRequest().authenticated()
+//        http.csrf(csrf -> csrf.disable())
+//                .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+//                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+//                .authorizeHttpRequests(auth ->
+//                        auth.requestMatchers("/api/auth/**").permitAll()
+//                                .requestMatchers("/api/test/**").permitAll()
+//                                .requestMatchers("/api/admin/**").hasAuthority(String.valueOf(ERole.ROLE_ADMIN))
+//                                .requestMatchers("/api/user/**").hasAuthority(String.valueOf(ERole.ROLE_USER))
+//                                .anyRequest().authenticated()
+//                );
+            http.csrf(csrf -> csrf.disable());
+        http
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/api/auth/**", "/api/test/**").permitAll()
+                        .requestMatchers("/api/admin/**").hasAuthority(String.valueOf(ERole.ROLE_ADMIN))
+                        .requestMatchers("/api/user/**").hasAuthority(String.valueOf(ERole.ROLE_USER))
                 );
+        http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
+        http.authenticationProvider(authenticationProvider());
 
         http.authenticationProvider(authenticationProvider());
 
