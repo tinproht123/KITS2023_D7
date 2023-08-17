@@ -39,7 +39,7 @@ public class Workout {
     private LocalDateTime dateTime;
 
     @Column(nullable = false)
-    private int distance;
+    private BigDecimal distance;
 
     @Column(nullable = false)
     @DecimalMin("0.00")
