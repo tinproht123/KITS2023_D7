@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class AdminController {
     @Autowired
     private ActivityService activityService;

@@ -42,4 +42,5 @@ public class ChallengeService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         challengeRepository.delete(challenge);
     }
+
 }

@@ -1,13 +1,8 @@
 package com.example.fittracker.controller;
 
-import com.example.fittracker.model.Goal;
-import com.example.fittracker.model.Report;
-import com.example.fittracker.model.User;
-import com.example.fittracker.model.Workout;
-import com.example.fittracker.service.GoalService;
-import com.example.fittracker.service.ReportService;
-import com.example.fittracker.service.UserService;
-import com.example.fittracker.service.WorkoutService;
+import com.example.fittracker.model.*;
+import com.example.fittracker.payload.workout.CreateWorkoutRequest;
+import com.example.fittracker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
@@ -19,6 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "*", maxAge = 3600)
 public class UserController {
     @Autowired
     private UserService userService;
@@ -28,6 +24,8 @@ public class UserController {
     private GoalService goalService;
     @Autowired
     private WorkoutService workoutService;
+    @Autowired
+    private ChallengeService challengeService;
 
     // user
 
@@ -59,11 +57,12 @@ public class UserController {
 
     // goal
 
-        @GetMapping("/goal")
-        public ResponseEntity<List<Goal>> getAllGoals() {
-            List<Goal> goals = goalService.getAllGoals();
-            return new ResponseEntity<>(goals, HttpStatus.OK);
-        }
+    @GetMapping("/goal")
+    public ResponseEntity<List<Goal>> getAllGoals() {
+
+        List<Goal> goals = goalService.getAllGoals();
+        return new ResponseEntity<>(goals, HttpStatus.OK);
+    }
         @PostMapping("/goal")
         public ResponseEntity<Goal> createGoal(@RequestBody Goal goal) {
             Goal savedGoal = goalService.saveGoal(goal);
@@ -80,6 +79,13 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
+        // advanced goal
+        @GetMapping("/goal/user/{userId}")
+        public ResponseEntity<List<Goal>> getGoalsByUserId(@PathVariable("userId") Long userId) {
+            List<Goal> goals = goalService.getGoalsByUserId(userId);
+            return ResponseEntity.ok(goals);
+        }
+
     // workout
 
         @GetMapping("/workout")
@@ -87,10 +93,15 @@ public class UserController {
             List<Workout> workouts = workoutService.getAllWorkouts();
             return new ResponseEntity<>(workouts, HttpStatus.OK);
         }
+//        @PostMapping("/workout")
+//        public ResponseEntity<Workout> createWorkout(@RequestBody Workout workout) {
+//            Workout savedWorkout = workoutService.saveWorkout(workout);
+//            return new ResponseEntity<>(savedWorkout, HttpStatus.CREATED);
+//        }
         @PostMapping("/workout")
-        public ResponseEntity<Workout> createWorkout(@RequestBody Workout workout) {
-            Workout savedWorkout = workoutService.saveWorkout(workout);
-            return new ResponseEntity<>(savedWorkout, HttpStatus.CREATED);
+        public ResponseEntity<Workout> createWorkout(@RequestBody CreateWorkoutRequest request) {
+            Workout workout = workoutService.createWorkout(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(workout);
         }
         @GetMapping("/workout/{id}")
         public ResponseEntity<Workout> getWorkoutById(@PathVariable Long id) {
@@ -123,7 +134,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
-
+    // challenge
 
     // report
 
