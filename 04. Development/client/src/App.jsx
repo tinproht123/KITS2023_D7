@@ -23,6 +23,8 @@ import Footer from "./components/Footer.jsx";
 import SignUp from "./pages/SignUp";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
 
 library.add(
   faPersonRunning,
@@ -75,6 +77,8 @@ function App() {
               <Route path="/" element={<HomePage />} />
               <Route path="/auth">
                 <Route path="signup" element={<SignUp />} />
+                <Route path="login" element={<Login />} />
+                <Route path="forgot_password" element={<ForgotPassword />} />
               </Route>
             </Routes>
           </Box>

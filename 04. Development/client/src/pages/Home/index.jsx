@@ -55,7 +55,7 @@ const HomePage = () => {
               backgroundColor: { xs: "#000", md: "#fff" },
               color: { xs: "#fff", md: "#000" },
             }}
-            type="light"
+            mode="light"
           >
             SIGN UP
           </StyledButton>
@@ -119,7 +119,7 @@ const HomePage = () => {
             </Typography>
             <StyledButton
               sx={{ width: "320px", margin: "0px !important" }}
-              type="dark"
+              mode="dark"
             >
               GET STARTED
             </StyledButton>
@@ -143,7 +143,7 @@ const HomePage = () => {
               padding: "25px",
               borderRadius: "5px",
               display: "flex",
-              alignItems: { xs: "start", md: "end" },
+              alignItems: { xs: "start", md: "center" },
               flexDirection: { xs: "column", md: "row" },
             }}
           >
@@ -200,7 +200,7 @@ const HomePage = () => {
           >
             Hit milestones and PR’s by taking on a new challenge every month.
           </Typography>
-          <StyledButton sx={{ width: "280px" }} type="dark">
+          <StyledButton sx={{ width: "280px" }} mode="dark">
             JOIN A CHALLENGE
           </StyledButton>
         </Box>
