@@ -1,7 +1,9 @@
 package com.example.fittracker.controller;
 
+import com.example.fittracker.model.Achievement;
 import com.example.fittracker.model.Activity;
 import com.example.fittracker.model.Challenge;
+import com.example.fittracker.service.AchievementService;
 import com.example.fittracker.service.ActivityService;
 import com.example.fittracker.service.ChallengeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ public class AdminController {
     private ActivityService activityService;
     @Autowired
     private ChallengeService challengeService;
+    @Autowired
+    private AchievementService achievementService;
 
     // activity
     @GetMapping("/activity")
@@ -71,6 +75,34 @@ public class AdminController {
     @DeleteMapping("/challenge/{id}")
     public ResponseEntity<HttpStatus> deleteChallenge(@PathVariable Long id) {
         challengeService.deleteChallenge(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // achievement
+
+    @GetMapping("/achievement")
+    public ResponseEntity<List<Achievement>> getAllAchievements() {
+        List<Achievement> achievements = achievementService.getAllAchievements();
+        return new ResponseEntity<>(achievements, HttpStatus.OK);
+    }
+    @PostMapping("/achievement")
+    public ResponseEntity<Achievement> createAchievement(@RequestBody Achievement achievement) {
+        Achievement savedAchievement = achievementService.saveAchievement(achievement);
+        return new ResponseEntity<>(savedAchievement, HttpStatus.CREATED);
+    }
+    @GetMapping("/achievement/{id}")
+    public ResponseEntity<Achievement> getAchievementById(@PathVariable Long id) {
+        Achievement achievement = achievementService.getAchievementById(id);
+        return new ResponseEntity<>(achievement, HttpStatus.OK);
+    }
+    @PutMapping("/achievement/{id}")
+    public ResponseEntity<Achievement> updateAchievement(@PathVariable Long id, @RequestBody Achievement achievementDetails) {
+        Achievement updatedAchievement = achievementService.updateAchievement(id, achievementDetails);
+        return new ResponseEntity<>(updatedAchievement, HttpStatus.OK);
+    }
+    @DeleteMapping("/achievement/{id}")
+    public ResponseEntity<HttpStatus> deleteAchievement(@PathVariable Long id) {
+        achievementService.deleteAchievement(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
