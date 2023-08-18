@@ -27,6 +27,8 @@ import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import Page_404 from "./pages/Page_404";
 import Admin from "./pages/admin";
+import Challenges from "./pages/Challenges";
+import Friends from "./pages/Friends";
 
 library.add(
   faPersonRunning,
@@ -93,6 +95,8 @@ function App() {
                   <Route path="signup" element={<SignUp />} />
                   <Route path="login" element={<Login />} />
                   <Route path="forgot_password" element={<ForgotPassword />} />
+                  <Route path="challenges" element={<Challenges />} />
+                  <Route path="people/friends" element={<Friends />} />
                 </Route>
                 <Route path="*" element={<Page_404 />} />
               </Routes>
