@@ -42,15 +42,11 @@ const Navbar = () => {
         <Box sx={{ width: "100%" }}>
           <Box height="60px"></Box>
           <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Link>
-              <StyledButton mode="light" to="/auth/login">
-                LOG IN
-              </StyledButton>
+            <Link to="/auth/login">
+              <StyledButton mode="light">LOG IN</StyledButton>
             </Link>
-            <Link>
-              <StyledButton mode="dark" to="/auth/signup">
-                SIGN UP
-              </StyledButton>
+            <Link to="/auth/signup">
+              <StyledButton mode="dark">SIGN UP</StyledButton>
             </Link>
           </Box>
           {navItems.map((item, idx) => (
@@ -131,7 +127,9 @@ const Navbar = () => {
                 textAlign: { xs: "center", md: "left" },
               }}
             >
-              <img src="/images/brand.svg" alt="logo" width="180px" />
+              <Link to="/">
+                <img src="/images/brand.svg" alt="logo" width="180px" />
+              </Link>
             </Box>
             <Box
               sx={{
@@ -155,7 +153,7 @@ const Navbar = () => {
                   <Typography
                     sx={{
                       fontWeight: "500",
-                      "& a": { textDecoration: "none" },
+                      "& a": { textDecoration: "none", color: "#000" },
                       "&:hover": {
                         fontWeight: "600",
                       },

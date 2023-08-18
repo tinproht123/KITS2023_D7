@@ -46,8 +46,11 @@ const validationSchema = yup.object({
     )
     .required("Password is required"),
   birthdate: yup.date().required("Birthdate is required").nonNullable(),
-  gender: yup.string().required("Geneder is required"),
-  country: yup.string().required("Country is required"),
+  gender: yup
+    .string()
+    .oneOf(["male", "female"])
+    .required("Geneder is required"),
+  country: yup.string().oneOf(country_list).required("Country is required"),
 });
 
 const SignUp = () => {
@@ -91,7 +94,7 @@ const SignUp = () => {
       mt={5}
       mb={20}
     >
-      <Typography variant="h4" fontWeight={700} my={5}>
+      <Typography variant="h4" fontWeight={700} mt={5}>
         Welcome to FitTracker
       </Typography>
       <Typography mb={3} fontSize={16}>

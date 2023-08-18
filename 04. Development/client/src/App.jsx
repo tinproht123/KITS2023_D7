@@ -25,6 +25,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
+import Page_404 from "./pages/Page_404";
+import Admin from "./pages/admin";
 
 library.add(
   faPersonRunning,
@@ -65,24 +67,38 @@ function App() {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <CssBaseline />
         <BrowserRouter>
+          <Routes>
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
           <Navbar />
           <Box
             sx={{
-              w: "100%",
-              maxWidth: "1440px",
-              mx: "auto",
+              minHeight: "100vh",
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
             }}
           >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/auth">
-                <Route path="signup" element={<SignUp />} />
-                <Route path="login" element={<Login />} />
-                <Route path="forgot_password" element={<ForgotPassword />} />
-              </Route>
-            </Routes>
+            <Box
+              sx={{
+                width: "100%",
+                maxWidth: "1440px",
+                mx: "auto",
+                flex: "1 1 auto",
+              }}
+            >
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/auth">
+                  <Route path="signup" element={<SignUp />} />
+                  <Route path="login" element={<Login />} />
+                  <Route path="forgot_password" element={<ForgotPassword />} />
+                </Route>
+                <Route path="*" element={<Page_404 />} />
+              </Routes>
+            </Box>
+            <Footer />
           </Box>
-          <Footer />
         </BrowserRouter>
       </LocalizationProvider>
     </ThemeProvider>

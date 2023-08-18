@@ -57,7 +57,7 @@ const Login = () => {
       mt={5}
       mb={20}
     >
-      <Typography variant="h4" fontWeight={700} my={5}>
+      <Typography variant="h4" fontWeight={700} mt={5}>
         Log In
       </Typography>
       <Typography mb={3} fontSize={16}>
