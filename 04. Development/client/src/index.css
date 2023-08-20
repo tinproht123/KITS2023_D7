@@ -7,3 +7,8 @@ body {
   height: 100%;
   margin: 0px;
 }
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
