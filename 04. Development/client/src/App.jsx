@@ -1,12 +1,17 @@
-import { CssBaseline, Box } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home";
-import Navbar from "./components/Navbar";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faAngleDown,
+  faAward,
   faBars,
+  faDumbbell,
+  faGear,
+  faHouse,
+  faMagnifyingGlass,
+  faPencil,
   faPersonRunning,
   faRoad,
   faUserGroup,
@@ -19,7 +24,6 @@ import {
   faYoutube,
 } from "@fortawesome/free-brands-svg-icons";
 import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
-import Footer from "./components/Footer.jsx";
 import SignUp from "./pages/SignUp";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -29,6 +33,8 @@ import Page_404 from "./pages/Page_404";
 import Admin from "./pages/admin";
 import Challenges from "./pages/Challenges";
 import Friends from "./pages/Friends";
+import MainLayout from "./components/Layouts/MainLayout";
+import AdminLayout from "./components/Layouts/AdminLayout";
 
 library.add(
   faPersonRunning,
@@ -42,7 +48,13 @@ library.add(
   faBars,
   faAngleDown,
   faEye,
-  faEyeSlash
+  faEyeSlash,
+  faHouse,
+  faDumbbell,
+  faPencil,
+  faAward,
+  faMagnifyingGlass,
+  faGear
 );
 
 function App() {
@@ -70,39 +82,23 @@ function App() {
         <CssBaseline />
         <BrowserRouter>
           <Routes>
-            <Route path="/admin" element={<Admin />} />
+            {/* ADMIN CONTROL PANEL */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Admin />} />
+            </Route>
+            {/* MAIN PAGE FOR USER */}
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="/auth">
+                <Route path="signup" element={<SignUp />} />
+                <Route path="login" element={<Login />} />
+                <Route path="forgot_password" element={<ForgotPassword />} />
+              </Route>
+              <Route path="challenges" element={<Challenges />} />
+              <Route path="people/friends" element={<Friends />} />
+              <Route path="*" element={<Page_404 />} />
+            </Route>
           </Routes>
-          <Navbar />
-          <Box
-            sx={{
-              minHeight: "100vh",
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "space-between",
-            }}
-          >
-            <Box
-              sx={{
-                width: "100%",
-                maxWidth: "1440px",
-                mx: "auto",
-                flex: "1 1 auto",
-              }}
-            >
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/auth">
-                  <Route path="signup" element={<SignUp />} />
-                  <Route path="login" element={<Login />} />
-                  <Route path="forgot_password" element={<ForgotPassword />} />
-                  <Route path="challenges" element={<Challenges />} />
-                  <Route path="people/friends" element={<Friends />} />
-                </Route>
-                <Route path="*" element={<Page_404 />} />
-              </Routes>
-            </Box>
-            <Footer />
-          </Box>
         </BrowserRouter>
       </LocalizationProvider>
     </ThemeProvider>

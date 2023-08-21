@@ -116,9 +116,9 @@ const Navbar = () => {
               onClick={() => setOpen((prev) => !prev)}
             >
               {open ? (
-                <FontAwesomeIcon icon="fa-solid fa-x" />
+                <FontAwesomeIcon icon="fa-solid fa-x" size="xs" />
               ) : (
-                <FontAwesomeIcon icon="fa-solid fa-bars" />
+                <FontAwesomeIcon icon="fa-solid fa-bars" size="xs" />
               )}
             </IconButton>
             <Box
