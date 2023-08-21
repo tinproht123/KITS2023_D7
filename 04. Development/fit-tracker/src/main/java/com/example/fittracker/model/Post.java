@@ -29,7 +29,7 @@ public class Post {
     @Column(nullable = false)
     private int likes;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     //@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private User user;

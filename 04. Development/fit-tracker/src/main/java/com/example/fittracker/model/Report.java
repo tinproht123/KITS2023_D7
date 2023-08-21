@@ -29,7 +29,7 @@ public class Report {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     //@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private User user;

@@ -1,6 +1,7 @@
 package com.example.fittracker.controller;
 
 import com.example.fittracker.model.*;
+import com.example.fittracker.payload.workout.CreateGoalRequest;
 import com.example.fittracker.payload.workout.CreateWorkoutRequest;
 import com.example.fittracker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -26,6 +30,8 @@ public class UserController {
     private WorkoutService workoutService;
     @Autowired
     private ChallengeService challengeService;
+    @Autowired
+    private UserChallengeService userChallengeService;
 
     // user
 
@@ -57,16 +63,15 @@ public class UserController {
 
     // goal
 
-    @GetMapping("/goal")
-    public ResponseEntity<List<Goal>> getAllGoals() {
-
-        List<Goal> goals = goalService.getAllGoals();
-        return new ResponseEntity<>(goals, HttpStatus.OK);
-    }
+        @GetMapping("/goal")
+        public ResponseEntity<List<Goal>> getAllGoals() {
+            List<Goal> goals = goalService.getAllGoals();
+            return new ResponseEntity<>(goals, HttpStatus.OK);
+        }
         @PostMapping("/goal")
-        public ResponseEntity<Goal> createGoal(@RequestBody Goal goal) {
-            Goal savedGoal = goalService.saveGoal(goal);
-            return new ResponseEntity<>(savedGoal, HttpStatus.CREATED);
+        public ResponseEntity<Goal> createGoal(@RequestBody CreateGoalRequest request) {
+            Goal goal = goalService.createGoal(request);
+            return ResponseEntity.status(HttpStatus.CREATED).body(goal);
         }
         @GetMapping("/goal/{id}")
         public ResponseEntity<Goal> getGoalById(@PathVariable Long id) {
@@ -125,6 +130,13 @@ public class UserController {
             List<Workout> workouts = workoutService.getWorkoutsByUserId(userId);
             return ResponseEntity.ok(workouts);
         }
+        @GetMapping("/workout/user/{userId}/{date}")
+        public ResponseEntity<List<Workout>> getWorkoutsByUserIdAndDate(
+                @PathVariable("userId") Long userId,
+                @PathVariable("date") LocalDate date) {
+            List<Workout> workouts = workoutService.getWorkoutsByUserIdAndDate(userId, date);
+            return ResponseEntity.ok(workouts);
+        }
         @GetMapping("/workout/{year}/{month}")
         public ResponseEntity<List<Workout>> getAllWorkoutsByMonthAndYear(@PathVariable("year") int year, @PathVariable("month") int month) {
             try {
@@ -134,8 +146,69 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
-    // challenge
+        @GetMapping("/workout/count/{user_id}/{date}")
+        public ResponseEntity<Long> countWorkoutsByUserIdAndDate(
+                @PathVariable("user_id") Long userId,
+                @PathVariable("date") LocalDate date
+        ) {
+            long count = workoutService.countWorkoutsByUser_UserIdAndDate(userId, date);
+            return ResponseEntity.ok(count);
+        }
+        @GetMapping("/workout/sum-calories/{user_id}/{date}")
+        public ResponseEntity<BigDecimal> totalCaloriesBurnedByUserIdAndDateTime(
+                @PathVariable("user_id") Long userId,
+                @PathVariable("date") LocalDate date
+        ) {
+            BigDecimal sum = workoutService.sumCaloriesBurnedByUser_UserIdAndDate(userId, date);
+            return ResponseEntity.ok(sum);
+        }
+        @GetMapping("/workout/sum-distance/{user_id}/{date}")
+        public ResponseEntity<BigDecimal> totalDistanceByUserIdAndDateTime(
+                @PathVariable("user_id") Long userId,
+                @PathVariable("date") LocalDate date
+        ) {
+            BigDecimal sum = workoutService.sumDistanceByUser_UserIdAndDate(userId, date);
+            return ResponseEntity.ok(sum);
+        }
+        @GetMapping("/workout/total-time/{user_id}/{date}")
+        public ResponseEntity<String> calculateTotalTimeByUserIdAndDate(
+                @PathVariable("user_id") Long userId,
+                @PathVariable("date") LocalDate date
+        ) {
+            String totalTime = workoutService.calculateTotalTimeByUser_UserIdAndDate(userId, date);
+            return ResponseEntity.ok(totalTime);
+        }
 
+        @GetMapping("/workout/count/{user_id}")
+        public ResponseEntity<Long> countWorkoutsByUserId(@PathVariable("user_id") Long userId
+        ) {
+            long count = workoutService.countWorkoutsByUser_UserId(userId);
+            return ResponseEntity.ok(count);
+        }
+        @GetMapping("/workout/sum-calories/{user_id}")
+        public ResponseEntity<BigDecimal> totalCaloriesBurnedByUserId(@PathVariable("user_id") Long userId
+        ) {
+            BigDecimal sum = workoutService.sumCaloriesBurnedByUser_UserId(userId);
+            return ResponseEntity.ok(sum);
+        }
+        @GetMapping("/workout/sum-distance/{user_id}")
+        public ResponseEntity<BigDecimal> totalDistanceByUserId(@PathVariable("user_id") Long userId
+        ) {
+            BigDecimal sum = workoutService.sumDistanceByUser_UserId(userId);
+            return ResponseEntity.ok(sum);
+        }
+        @GetMapping("/workout/total-time/{user_id}")
+        public ResponseEntity<String> calculateTotalTimeByUserId(@PathVariable("user_id") Long userId
+        ) {
+            String totalTime = workoutService.calculateTotalTimeByUserId(userId);
+            return ResponseEntity.ok(totalTime);
+        }
+    // challenge
+//        @PostMapping("/challenge/{challenge_id}/{user_id}")
+//        public ResponseEntity<UserChallenge> createUserChallenge(@PathVariable("challenge_id") Long challengeId, @PathVariable("user_id") Long userId) {
+//            UserChallenge userChallenge = userChallengeService.saveUserChallenge(challengeId, userId);
+//            return new ResponseEntity<>(userChallenge, HttpStatus.CREATED);
+//        }
     // report
 
         @PostMapping("/report")

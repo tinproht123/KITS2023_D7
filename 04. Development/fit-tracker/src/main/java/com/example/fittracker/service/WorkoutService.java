@@ -120,4 +120,65 @@ public class WorkoutService {
         return Duration.between(start, end).toSeconds();
     }
 
+    public long countWorkoutsByUser_UserIdAndDate(Long userId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+        return workoutRepository.countWorkoutsByUser_UserIdAndDateTimeBetween(userId, startOfDay, endOfDay);
+    }
+
+    public BigDecimal sumCaloriesBurnedByUser_UserIdAndDate(Long userId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+        return workoutRepository.sumCaloriesBurnedByUser_UserIdAndDateTimeBetween(userId, startOfDay, endOfDay);
+    }
+
+    public BigDecimal sumDistanceByUser_UserIdAndDate(Long userId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+        return workoutRepository.sumDistanceByUser_UserIdAndDateTimeBetween(userId, startOfDay, endOfDay);
+    }
+
+    public List<Workout> getWorkoutsByUserIdAndDate(Long userId, LocalDate date) {
+        LocalDateTime startOfDay = date.atStartOfDay();
+        LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
+        return workoutRepository.findByUser_UserIdAndDateTime(userId, startOfDay, endOfDay);
+    }
+
+    public long countWorkoutsByUser_UserId(Long userId) {
+        return workoutRepository.countWorkoutsByUser_UserId(userId);
+    }
+
+    public BigDecimal sumCaloriesBurnedByUser_UserId(Long userId) {
+        return workoutRepository.sumCaloriesBurnedByUser_UserId(userId);
+    }
+
+    public BigDecimal sumDistanceByUser_UserId(Long userId) {
+        return workoutRepository.sumDistanceByUser_UserId(userId);
+    }
+
+    public String calculateTotalTimeByUserId(Long userId) {
+        List<Workout> workouts = workoutRepository.findByUser_UserId(userId);
+        Duration totalTime = Duration.ZERO;
+        for (Workout workout : workouts) {
+            LocalDateTime startDateTime = workout.getTimeStart();
+            LocalDateTime endDateTime = workout.getTimeEnd();
+            Duration workoutDuration = Duration.between(startDateTime, endDateTime);
+            totalTime = totalTime.plus(workoutDuration);
+        }
+        long totalSeconds = totalTime.getSeconds();
+        long hours = totalSeconds / 3600;
+        long minutes = (totalSeconds % 3600) / 60;
+        long seconds = totalSeconds % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
+
+    public String calculateTotalTimeByUser_UserIdAndDate(Long userId, LocalDate date) {
+        LocalDateTime startDateTime = date.atStartOfDay();
+        LocalDateTime endDateTime = date.atTime(LocalTime.MAX);
+        BigDecimal totalSeconds = workoutRepository.calculateTotalTimeByUser_UserIdAndDateTimeBetween(userId, startDateTime, endDateTime);
+        long hours = totalSeconds.longValue() / 3600;
+        long minutes = (totalSeconds.longValue() % 3600) / 60;
+        long seconds = totalSeconds.longValue() % 60;
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+    }
 }

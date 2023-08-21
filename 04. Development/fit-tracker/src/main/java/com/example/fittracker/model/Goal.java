@@ -1,13 +1,12 @@
 package com.example.fittracker.model;
 
+import com.example.fittracker.service.GoalService;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.DecimalMin;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,6 +14,7 @@ import java.time.LocalDateTime;
 @Table(name = "goals")
 @AllArgsConstructor
 @NoArgsConstructor
+@EntityListeners(GoalService.class)
 public class Goal {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,11 +40,14 @@ public class Goal {
     private int target;
 
     @Column(nullable = false)
-    @DecimalMin("0.00")
-    private BigDecimal currentComplete;
+    private int currentComplete;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     //@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private User user;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "activity_id")
+    private Activity activity;
 }
