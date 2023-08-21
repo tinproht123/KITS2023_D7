@@ -10,12 +10,22 @@ const AdminLayout = () => {
       sx={{
         position: "relative",
         display: "flex",
+        minHeight: "100vh",
       }}
     >
       <MySidebar />
-      <Box sx={{ width: "100%", height: "100%", backgroundColor: "#f9f9f9" }}>
+      <Box
+        sx={{
+          width: "100%",
+          minHeight: "100%",
+          border: "2px solid blue",
+          backgroundColor: "#f1f1f1",
+        }}
+      >
         <Topbar />
-        <Outlet />
+        <Box p={1}>
+          <Outlet />
+        </Box>
       </Box>
     </Box>
   );

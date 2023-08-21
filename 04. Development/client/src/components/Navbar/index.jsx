@@ -10,7 +10,7 @@ import {
   AccordionDetails,
 } from "@mui/material";
 import StyledButton from "../StyledButton";
-import { NavLink, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { grey } from "@mui/material/colors";
@@ -19,25 +19,43 @@ const navItems = [
   {
     to: "/workouts",
     text: "Workouts",
-    subs: ["Dashboard"],
+    subs: [
+      {
+        to: "/dashboard",
+        text: "Dashboard",
+      },
+    ],
   },
   {
     to: "/community",
     text: "Community",
-    subs: ["Activity Feed", "Challenges"],
+    subs: [
+      {
+        to: "/activity-feed",
+        text: "Activity Feed",
+      },
+      {
+        to: "/challenges",
+        text: "Challenges",
+      },
+    ],
   },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+
   return (
     <>
       {/* DRAWER  */}
       <Drawer
-        sx={{ display: { md: "none" } }}
+        sx={{
+          display: { md: "none" },
+        }}
         anchor={"left"}
         open={open}
         mt="60px"
+        ModalProps={{ disableScrollLock: true }}
       >
         <Box sx={{ width: "100%" }}>
           <Box height="60px"></Box>
@@ -80,7 +98,7 @@ const Navbar = () => {
                       "&:hover": { backgroundColor: grey[300] },
                     }}
                   >
-                    {sub}
+                    <Link to={sub.to}>{sub.text}</Link>
                   </Typography>
                 ))}
               </AccordionDetails>
@@ -159,7 +177,7 @@ const Navbar = () => {
                       },
                     }}
                   >
-                    <NavLink to={item.to}>{item.text}</NavLink>
+                    <Link to={item.to}>{item.text}</Link>
                   </Typography>
                   <Box
                     className="dropdown-subs"
@@ -184,9 +202,9 @@ const Navbar = () => {
                     }}
                   >
                     {item.subs.map((sub, index) => (
-                      <NavLink to="/" key={index}>
-                        {sub}
-                      </NavLink>
+                      <Link to={sub.to} key={index}>
+                        {sub.text}
+                      </Link>
                     ))}
                   </Box>
                 </Box>

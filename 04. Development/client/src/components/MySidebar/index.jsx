@@ -3,27 +3,39 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+
+const Item = ({ title, icon, to, selected, setSelected }) => {
+  return (
+    <MenuItem
+      active={selected === to}
+      onClick={() => setSelected(to)}
+      component={<Link to={to} />}
+      icon={icon}
+    >
+      <Typography>{title}</Typography>
+    </MenuItem>
+  );
+};
 
 const MySidebar = () => {
+  const location = useLocation();
+
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [selected, setSelected] = useState(location.pathname);
 
   return (
-    <Sidebar
-      collapsed={isCollapsed}
-      menuItemStyles={{
-        button: {
-          [`&.active`]: {
-            color: "#d2042d",
-          },
-        },
-      }}
-    >
+    <Sidebar collapsed={isCollapsed}>
       <Box
         border="1px solid red"
-        height="100vh"
+        height="100%"
         display="flex"
         flexDirection="column"
+        sx={{
+          "& .ps-active": {
+            color: "#d2042d !important",
+          },
+        }}
       >
         <Box
           mb={"24px"}
@@ -52,59 +64,76 @@ const MySidebar = () => {
           <Box sx={{ p: "0 20px", mb: "8px" }}>
             <Typography fontWeight={600}>General</Typography>
           </Box>
-          <Menu
-            menuItemStyles={{
-              button: {
-                [`&.active`]: {
-                  backgroundColor: "#000",
-                  color: "#b6c8d9",
-                },
-              },
-            }}
-          >
-            <MenuItem
-              component={<Link to="/admin/dashboard" />}
+          <Menu>
+            <Item
+              selected={selected}
+              setSelected={setSelected}
+              title="Dashboard"
+              to="/admin/dashboard"
               icon={<FontAwesomeIcon icon="fa-solid fa-house" size="xs" />}
-            >
-              <Typography>Dashboard</Typography>
-            </MenuItem>
+            />
           </Menu>
           <Box sx={{ p: "0 20px", mb: "8px" }}>
             <Typography fontWeight={600}>Data</Typography>
           </Box>
           <Menu>
-            <MenuItem
-              component={<Link to="/admin/users" />}
+            <Item
+              selected={selected}
+              setSelected={setSelected}
+              title="Users"
+              to="/admin/users"
               icon={<FontAwesomeIcon icon="fa-solid fa-user-group" size="xs" />}
-            >
-              <Typography>Users</Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/admin/activities" />}
+            />
+            <Item
+              selected={selected}
+              setSelected={setSelected}
+              title="Activities"
+              to="/admin/activities"
               icon={<FontAwesomeIcon icon="fa-solid fa-dumbbell" size="xs" />}
-            >
-              <Typography>Activities</Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/admin/community-posts" />}
+            />
+            <Item
+              selected={selected}
+              setSelected={setSelected}
+              title="Community Posts"
+              to="/admin/community-posts"
               icon={<FontAwesomeIcon icon="fa-solid fa-pencil" size="xs" />}
-            >
-              <Typography>Community Posts</Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/admin/challenges" />}
+            />
+            <Item
+              selected={selected}
+              setSelected={setSelected}
+              title="Challenges"
+              to="/admin/challenges"
               icon={
                 <FontAwesomeIcon icon="fa-solid fa-person-running" size="xs" />
               }
-            >
-              <Typography>Challenges</Typography>
-            </MenuItem>
-            <MenuItem
-              component={<Link to="/admin/Achivements" />}
+            />
+
+            <Item
+              selected={selected}
+              setSelected={setSelected}
+              title="Achivements"
+              to="/admin/achivements"
               icon={<FontAwesomeIcon icon="fa-solid fa-award" size="xs" />}
-            >
-              <Typography>Achivements</Typography>
-            </MenuItem>
+            />
+          </Menu>
+          <Box sx={{ p: "0 20px", mb: "8px" }}>
+            <Typography fontWeight={600}>Form</Typography>
+          </Box>
+          <Menu>
+            <Item
+              selected={selected}
+              setSelected={setSelected}
+              title="Activity Form"
+              to="/admin/activity-form"
+              icon={<FontAwesomeIcon icon="fa-solid fa-list-check" size="xs" />}
+            />
+            <Item
+              selected={selected}
+              setSelected={setSelected}
+              title="Achivement Form"
+              to="/admin/achivement-form"
+              icon={<FontAwesomeIcon icon="fa-solid fa-trophy" size="xs" />}
+            />
           </Menu>
         </Box>
       </Box>
