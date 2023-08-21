@@ -69,7 +69,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 //                                .requestMatchers("/api/user/**").hasAuthority(String.valueOf(ERole.ROLE_USER))
 //                                .anyRequest().authenticated()
 //                );
-            http.csrf(csrf -> csrf.disable());
+            http.cors(cors -> cors.disable()).csrf(csrf -> csrf.disable());
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/api/auth/**", "/api/test/**").permitAll()

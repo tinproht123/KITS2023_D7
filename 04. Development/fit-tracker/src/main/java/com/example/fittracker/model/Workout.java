@@ -52,12 +52,12 @@ public class Workout {
     @DecimalMin("0.00")
     private BigDecimal caloriesBurned;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     //@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private User user;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "activity_id")
     //@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Activity activity;

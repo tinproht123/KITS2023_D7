@@ -26,7 +26,7 @@ public class Comment {
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL,optional = false)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "post_id")
     //@JsonIgnoreProperties(value = {"applications", "hibernateLazyInitializer"})
     private Post post;

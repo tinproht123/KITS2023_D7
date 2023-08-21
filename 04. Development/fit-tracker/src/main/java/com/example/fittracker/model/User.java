@@ -75,7 +75,7 @@ public class User {
     @DecimalMin("0.01")
     private BigDecimal height;
 
-    @Column(columnDefinition = "varchar(255) DEFAULT './blank-profile-picture.png'")
+    @Column(columnDefinition = "varchar(255) DEFAULT 'blank-profile-picture.png'")
     private String image;
 
     @OneToMany(mappedBy = "user")
