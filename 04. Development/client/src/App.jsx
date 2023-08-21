@@ -35,6 +35,11 @@ import Challenges from "./pages/Challenges";
 import Friends from "./pages/Friends";
 import MainLayout from "./components/Layouts/MainLayout";
 import AdminLayout from "./components/Layouts/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import Activities from "./pages/admin/Activities";
+import CommunityPosts from "./pages/admin/CommunityPosts";
+import Users from "./pages/admin/Users";
+import Achivements from "./pages/admin/Achivements";
 
 library.add(
   faPersonRunning,
@@ -84,7 +89,12 @@ function App() {
           <Routes>
             {/* ADMIN CONTROL PANEL */}
             <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<Admin />} />
+              <Route index path="dashboard" element={<Dashboard />} />
+              <Route path="users" element={<Users />} />
+              <Route path="activities" element={<Activities />} />
+              <Route path="community-posts" element={<CommunityPosts />} />
+              <Route path="challenges" element={<Challenges />} />
+              <Route path="achivements" element={<Achivements />} />
             </Route>
             {/* MAIN PAGE FOR USER */}
             <Route path="/" element={<MainLayout />}>

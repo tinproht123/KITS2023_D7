@@ -1,7 +1,16 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, IconButton, InputBase } from "@mui/material";
+import { Box, IconButton, InputBase, Menu, MenuItem } from "@mui/material";
+import { useState } from "react";
 
 const Topbar = () => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <Box
       display="flex"
@@ -17,10 +26,13 @@ const Topbar = () => {
         </IconButton>
       </Box>
 
-      <Box display="flex">
-        <IconButton>
+      <Box display="flex" position="relative">
+        <IconButton onClick={handleClick}>
           <FontAwesomeIcon icon="fa-solid fa-gear" size="2xs" />
         </IconButton>
+        <Menu open={open} onClose={handleClose}>
+          <MenuItem>Log Out</MenuItem>
+        </Menu>
       </Box>
     </Box>
   );
