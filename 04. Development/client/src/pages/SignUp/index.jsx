@@ -45,12 +45,13 @@ const validationSchema = yup.object({
       "Password must has length of 6 and has at least 1 number"
     )
     .required("Password is required"),
-  birthdate: yup.date().required("Birthdate is required").nonNullable(),
+  birthday: yup.date().required("Birthdate is required").nonNullable(),
   gender: yup
     .string()
     .oneOf(["male", "female"])
     .required("Geneder is required"),
   country: yup.string().oneOf(country_list).required("Country is required"),
+  city: yup.string().required("City is required"),
 });
 
 const SignUp = () => {
@@ -70,7 +71,7 @@ const SignUp = () => {
       lastName: "",
       email: "",
       password: "",
-      birthdate: dayjs(Date.now()),
+      birthday: dayjs(Date.now()),
       gender: "",
       country: "",
     },
@@ -189,19 +190,18 @@ const SignUp = () => {
         </FormControl>
         <DatePicker
           disableFuture
-          label="Birthday"
+          label="Birthdate"
           format="YYYY/MM/DD"
-          value={formik.values.birthdate}
+          value={formik.values.birthday}
           onChange={(date) => {
-            formik.setFieldValue("birthdate", date);
+            formik.setFieldValue("birthday", date);
           }}
           sx={{ width: "100%", marginBottom: "20px" }}
           slotProps={{
             textField: {
               variant: "outlined",
-              error:
-                formik.touched.birthdate && Boolean(formik.errors.birthdate),
-              helperText: formik.touched.birthdate && formik.errors.birthdate,
+              error: formik.touched.birthday && Boolean(formik.errors.birthday),
+              helperText: formik.touched.birthday && formik.errors.birthday,
             },
           }}
         />
@@ -230,7 +230,7 @@ const SignUp = () => {
           onChange={formik.handleChange("country")}
           error={formik.touched.country && Boolean(formik.errors.country)}
           helperText={formik.touched.country && formik.errors.country}
-          sx={{ marginBottom: "50px" }}
+          sx={{ marginBottom: "20px" }}
         >
           {country_list.map((country, idx) => (
             <MenuItem key={idx} value={country}>
@@ -238,6 +238,17 @@ const SignUp = () => {
             </MenuItem>
           ))}
         </TextField>
+        <TextField
+          fullWidth
+          id="city"
+          label="City"
+          value={formik.values.city}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.city && Boolean(formik.errors.city)}
+          helperText={formik.touched.city && formik.errors.city}
+          sx={{ marginBottom: "50px" }}
+        />
         <Box width="100%" textAlign={"center"}>
           <StyledButton type="submit" mode="dark" sx={{ width: "300px" }}>
             SIGN UP

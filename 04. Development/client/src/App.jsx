@@ -10,11 +10,17 @@ import {
   faDumbbell,
   faGear,
   faHouse,
+  faListCheck,
   faMagnifyingGlass,
+  faMars,
   faPencil,
   faPersonRunning,
   faRoad,
+  faShieldHalved,
+  faTrophy,
+  faUser,
   faUserGroup,
+  faVenus,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -30,16 +36,17 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
 import Page_404 from "./pages/Page_404";
-import Admin from "./pages/admin";
 import Challenges from "./pages/Challenges";
 import Friends from "./pages/Friends";
 import MainLayout from "./components/Layouts/MainLayout";
 import AdminLayout from "./components/Layouts/AdminLayout";
-import Dashboard from "./pages/admin/Dashboard";
-import Activities from "./pages/admin/Activities";
-import CommunityPosts from "./pages/admin/CommunityPosts";
-import Users from "./pages/admin/Users";
-import Achivements from "./pages/admin/Achivements";
+import Dashboard from "./pages/admin/General/Dashboard";
+import Activities from "./pages/admin/Data/Activities";
+import CommunityPosts from "./pages/admin/Data/CommunityPosts";
+import Users from "./pages/admin/Data/Users";
+import Achivements from "./pages/admin/Data/Achivements";
+import ActivityForm from "./pages/admin/Form/ActivityForm";
+import AchivementForm from "./pages/admin/Form/AchivementForm";
 
 library.add(
   faPersonRunning,
@@ -59,7 +66,13 @@ library.add(
   faPencil,
   faAward,
   faMagnifyingGlass,
-  faGear
+  faGear,
+  faListCheck,
+  faTrophy,
+  faVenus,
+  faMars,
+  faShieldHalved,
+  faUser
 );
 
 function App() {
@@ -95,6 +108,8 @@ function App() {
               <Route path="community-posts" element={<CommunityPosts />} />
               <Route path="challenges" element={<Challenges />} />
               <Route path="achivements" element={<Achivements />} />
+              <Route path="activity-form" element={<ActivityForm />} />
+              <Route path="achivement-form" element={<AchivementForm />} />
             </Route>
             {/* MAIN PAGE FOR USER */}
             <Route path="/" element={<MainLayout />}>
