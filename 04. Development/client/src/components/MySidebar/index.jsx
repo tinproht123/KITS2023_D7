@@ -53,6 +53,35 @@ const MySidebar = () => {
             <FontAwesomeIcon icon="fa-solid fa-bars" size="xs" />
           </IconButton>
         </Box>
+        <Box>
+          {!isCollapsed && (
+            <Box mb="25px">
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <img
+                  alt="profile-user"
+                  width="100px"
+                  height="100px"
+                  src={`/images/avatar.png`}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                  }}
+                />
+              </Box>
+              <Box textAlign="center">
+                <Typography
+                  variant="h5"
+                  fontWeight="bold"
+                  sx={{ m: "10px 0 0 0" }}
+                  color="#d2042d"
+                >
+                  Khanh Tung
+                </Typography>
+              </Box>
+            </Box>
+          )}
+        </Box>
         <Box
           sx={{
             flex: 1,
@@ -69,7 +98,7 @@ const MySidebar = () => {
               selected={selected}
               setSelected={setSelected}
               title="Dashboard"
-              to="/admin/dashboard"
+              to="/admin"
               icon={<FontAwesomeIcon icon="fa-solid fa-house" size="xs" />}
             />
           </Menu>

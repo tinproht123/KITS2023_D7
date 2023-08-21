@@ -18,10 +18,12 @@ const Users = () => {
     {
       field: "firstName",
       headerName: "First Name",
+      flex: 1,
     },
     {
       field: "lastName",
       headerName: "Last Name",
+      flex: 1,
     },
     {
       field: "email",
@@ -31,6 +33,7 @@ const Users = () => {
     {
       field: "birthday",
       headerName: "Birthdate",
+      minWidth: 200,
     },
     {
       field: "gender",
@@ -116,7 +119,7 @@ const Users = () => {
         title="Users Data"
         subtitle="Manage all FitTracker's users information"
       />
-      <Box mt={4} height="75vh">
+      <Box mt={4} height="75vh" backgroundColor="#fff">
         <DataGrid rows={users} columns={columns} />
       </Box>
 
@@ -132,8 +135,12 @@ const Users = () => {
           alignItems: "center",
         }}
       >
-        <Box width="800px" height="400px" display="flex" border="1px solid red">
-          <img src={`/images/${imagePath}`} style={{ objectFit: "cover" }} />
+        <Box maxWidth="600px" maxHeight="600px" display="flex">
+          <img
+            width="100%"
+            src={`/images/${imagePath}`}
+            style={{ objectFit: "cover" }}
+          />
         </Box>
       </Modal>
     </Box>

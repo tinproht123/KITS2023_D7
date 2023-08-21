@@ -14,7 +14,11 @@ import {
   faMagnifyingGlass,
   faMars,
   faPencil,
+  faPersonBiking,
+  faPersonHiking,
   faPersonRunning,
+  faPersonSwimming,
+  faPersonWalking,
   faRoad,
   faShieldHalved,
   faTrophy,
@@ -72,7 +76,11 @@ library.add(
   faVenus,
   faMars,
   faShieldHalved,
-  faUser
+  faUser,
+  faPersonBiking,
+  faPersonHiking,
+  faPersonWalking,
+  faPersonSwimming
 );
 
 function App() {
@@ -102,7 +110,7 @@ function App() {
           <Routes>
             {/* ADMIN CONTROL PANEL */}
             <Route path="/admin" element={<AdminLayout />}>
-              <Route index path="dashboard" element={<Dashboard />} />
+              <Route index element={<Dashboard />} />
               <Route path="users" element={<Users />} />
               <Route path="activities" element={<Activities />} />
               <Route path="community-posts" element={<CommunityPosts />} />
