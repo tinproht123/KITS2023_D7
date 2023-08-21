@@ -1,5 +1,7 @@
+import { Box } from "@mui/material";
+
 const ActivityForm = () => {
-  return <div>ActivityForm</div>;
+  return <Box>Achivements</Box>;
 };
 
 export default ActivityForm;
