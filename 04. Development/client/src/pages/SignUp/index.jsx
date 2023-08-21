@@ -74,13 +74,15 @@ const SignUp = () => {
       birthday: dayjs(Date.now()),
       gender: "",
       country: "",
+      city: "",
     },
     validationSchema,
     onSubmit: (val) => {
       const userData = {
         ...val,
-        birthdate: val.birthdate.format("YYYY-MM-DD"),
+        birthday: val.birthday.format("YYYY-MM-DD"),
       };
+      console.log(userData);
       dispatch(signUp({ userData }));
     },
   });

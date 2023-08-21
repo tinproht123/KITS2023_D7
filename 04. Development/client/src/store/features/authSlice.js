@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import BASE_API from "../../mock/api";
 import axios from "axios";
 
-const API = `${BASE_API}/auth`;
+const API = `${BASE_API}/api/auth`;
 
 const initialState = {
   isLoading: false,
