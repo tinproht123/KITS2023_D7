@@ -12,6 +12,7 @@ import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -60,8 +61,9 @@ public class User {
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime birthday;
+    @DateTimeFormat(pattern = "yyyy-MM-dd ")
+    private LocalDateTime
+            birthday;
 
     @Column
     private String city;
@@ -114,7 +116,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
-        this.birthday = LocalDateTime.parse(birthday, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        this.birthday = LocalDate.parse(birthday, DateTimeFormatter.ISO_DATE).atStartOfDay();
         this.gender = gender;
         this.country = country;
         this.city = city;
