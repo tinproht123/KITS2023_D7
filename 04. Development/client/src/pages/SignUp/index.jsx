@@ -1,0 +1,251 @@
+import * as yup from "yup";
+import { useFormik } from "formik";
+import {
+  Box,
+  FormControl,
+  FormHelperText,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  MenuItem,
+  OutlinedInput,
+  TextField,
+  Typography,
+} from "@mui/material";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useState } from "react";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import dayjs from "dayjs";
+import country_list from "../../mock/country";
+import StyledButton from "../../components/StyledButton";
+import { useDispatch } from "react-redux";
+import { signUp } from "../../store/features/authSlice";
+
+const validationSchema = yup.object({
+  username: yup
+    .string("Enter your username")
+    .min(6, "Username must contains at least 6 characters")
+    .max(20, "Username max length is 20")
+    .required("Username is required"),
+  firstName: yup
+    .string("Enter your first name")
+    .required("First name is required"),
+  lastName: yup
+    .string("Enter your last name")
+    .required("Last name is required"),
+  email: yup
+    .string("Enter your email")
+    .email("Enter a valid email")
+    .required("Email is required"),
+  password: yup
+    .string("Enter your password")
+    .matches(
+      "^[a-zA-Z0-9]{6,}$",
+      "Password must has length of 6 and has at least 1 number"
+    )
+    .required("Password is required"),
+  birthdate: yup.date().required("Birthdate is required").nonNullable(),
+  gender: yup
+    .string()
+    .oneOf(["male", "female"])
+    .required("Geneder is required"),
+  country: yup.string().oneOf(country_list).required("Country is required"),
+});
+
+const SignUp = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleClickShowPassword = () => setShowPassword((prev) => !prev);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      birthdate: dayjs(Date.now()),
+      gender: "",
+      country: "",
+    },
+    validationSchema,
+    onSubmit: (val) => {
+      const userData = {
+        ...val,
+        birthdate: val.birthdate.format("YYYY-MM-DD"),
+      };
+      dispatch(signUp({ userData }));
+    },
+  });
+  return (
+    <Box
+      sx={{
+        maxWidth: "500px",
+        width: "95%",
+        marginInline: "auto",
+        textAlign: "center",
+      }}
+      mt={5}
+      mb={20}
+    >
+      <Typography variant="h4" fontWeight={700} mt={5}>
+        Welcome to FitTracker
+      </Typography>
+      <Typography mb={3} fontSize={16}>
+        Already a member?{" "}
+        <Link to="/auth/login" style={{ color: "#000", fontWeight: 500 }}>
+          Log In
+        </Link>
+      </Typography>
+      <form onSubmit={formik.handleSubmit} style={{ textAlign: "left" }}>
+        <TextField
+          fullWidth
+          id="username"
+          label="Username"
+          value={formik.values.username}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.username && Boolean(formik.errors.username)}
+          helperText={formik.touched.username && formik.errors.username}
+          sx={{ marginBottom: "20px" }}
+        />
+        <TextField
+          fullWidth
+          id="firstName"
+          label="First Name"
+          value={formik.values.firstName}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.firstName && Boolean(formik.errors.firstName)}
+          helperText={formik.touched.firstName && formik.errors.firstName}
+          sx={{ marginBottom: "20px" }}
+        />
+        <TextField
+          fullWidth
+          id="lastName"
+          label="Last Name"
+          value={formik.values.lastName}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.lastName && Boolean(formik.errors.lastName)}
+          helperText={formik.touched.lastName && formik.errors.lastName}
+          sx={{ marginBottom: "20px" }}
+        />
+        <TextField
+          fullWidth
+          label="Email"
+          id="email"
+          type="email"
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={formik.touched.email && formik.errors.email}
+          sx={{ marginBottom: "20px" }}
+        />
+        <FormControl
+          fullWidth
+          variant="outlined"
+          sx={{ marginBottom: "20px" }}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+        >
+          <InputLabel htmlFor="password">Password</InputLabel>
+          <OutlinedInput
+            id="password"
+            type={showPassword ? "text" : "password"}
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                  edge="end"
+                >
+                  {showPassword ? (
+                    <FontAwesomeIcon
+                      icon="fa-regular fa-eye-slash"
+                      size="2xs"
+                    />
+                  ) : (
+                    <FontAwesomeIcon icon="fa-regular fa-eye" size="2xs" />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            }
+            label="Password"
+          />
+          <FormHelperText>
+            {formik.touched.password && formik.errors.password}
+          </FormHelperText>
+        </FormControl>
+        <DatePicker
+          disableFuture
+          label="Birthday"
+          format="YYYY/MM/DD"
+          value={formik.values.birthdate}
+          onChange={(date) => {
+            formik.setFieldValue("birthdate", date);
+          }}
+          sx={{ width: "100%", marginBottom: "20px" }}
+          slotProps={{
+            textField: {
+              variant: "outlined",
+              error:
+                formik.touched.birthdate && Boolean(formik.errors.birthdate),
+              helperText: formik.touched.birthdate && formik.errors.birthdate,
+            },
+          }}
+        />
+        <TextField
+          fullWidth
+          select
+          id="gender"
+          label="Gender"
+          value={formik.values.gender}
+          onChange={formik.handleChange("gender")}
+          error={formik.touched.gender && Boolean(formik.errors.gender)}
+          helperText={formik.touched.gender && formik.errors.gender}
+          sx={{ marginBottom: "20px" }}
+        >
+          <MenuItem selected value={"male"}>
+            Male
+          </MenuItem>
+          <MenuItem value={"female"}>Female</MenuItem>
+        </TextField>
+        <TextField
+          fullWidth
+          select
+          id="country"
+          label="Country/Region"
+          value={formik.values.country}
+          onChange={formik.handleChange("country")}
+          error={formik.touched.country && Boolean(formik.errors.country)}
+          helperText={formik.touched.country && formik.errors.country}
+          sx={{ marginBottom: "50px" }}
+        >
+          {country_list.map((country, idx) => (
+            <MenuItem key={idx} value={country}>
+              {country}
+            </MenuItem>
+          ))}
+        </TextField>
+        <Box width="100%" textAlign={"center"}>
+          <StyledButton type="submit" mode="dark" sx={{ width: "300px" }}>
+            SIGN UP
+          </StyledButton>
+        </Box>
+      </form>
+    </Box>
+  );
+};
+
+export default SignUp;

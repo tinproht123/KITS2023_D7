@@ -1,16 +1,61 @@
-import { CssBaseline, Box } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/Home";
-import Navbar from "./components/Navbar";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
+  faAngleDown,
+  faAward,
+  faBars,
+  faDumbbell,
+  faGear,
+  faHouse,
+  faMagnifyingGlass,
+  faPencil,
   faPersonRunning,
   faRoad,
   faUserGroup,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  faFacebookF,
+  faInstagram,
+  faXTwitter,
+  faYoutube,
+} from "@fortawesome/free-brands-svg-icons";
+import { faEye, faEyeSlash } from "@fortawesome/free-regular-svg-icons";
+import SignUp from "./pages/SignUp";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import Page_404 from "./pages/Page_404";
+import Admin from "./pages/admin";
+import Challenges from "./pages/Challenges";
+import Friends from "./pages/Friends";
+import MainLayout from "./components/Layouts/MainLayout";
+import AdminLayout from "./components/Layouts/AdminLayout";
 
-library.add(faPersonRunning, faRoad, faUserGroup);
+library.add(
+  faPersonRunning,
+  faRoad,
+  faUserGroup,
+  faInstagram,
+  faFacebookF,
+  faXTwitter,
+  faYoutube,
+  faX,
+  faBars,
+  faAngleDown,
+  faEye,
+  faEyeSlash,
+  faHouse,
+  faDumbbell,
+  faPencil,
+  faAward,
+  faMagnifyingGlass,
+  faGear
+);
 
 function App() {
   const theme = createTheme({
@@ -33,21 +78,29 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <BrowserRouter>
-        <Navbar />
-        <Box
-          sx={{
-            w: "100%",
-            maxWidth: "1440px",
-            mx: "auto",
-          }}
-        >
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <CssBaseline />
+        <BrowserRouter>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            {/* ADMIN CONTROL PANEL */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<Admin />} />
+            </Route>
+            {/* MAIN PAGE FOR USER */}
+            <Route path="/" element={<MainLayout />}>
+              <Route index element={<HomePage />} />
+              <Route path="/auth">
+                <Route path="signup" element={<SignUp />} />
+                <Route path="login" element={<Login />} />
+                <Route path="forgot_password" element={<ForgotPassword />} />
+              </Route>
+              <Route path="challenges" element={<Challenges />} />
+              <Route path="people/friends" element={<Friends />} />
+              <Route path="*" element={<Page_404 />} />
+            </Route>
           </Routes>
-        </Box>
-      </BrowserRouter>
+        </BrowserRouter>
+      </LocalizationProvider>
     </ThemeProvider>
   );
 }

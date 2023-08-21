@@ -34,7 +34,12 @@ public class Workout {
     private LocalDateTime timeEnd;
 
     @Column(nullable = false)
-    private int distance;
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime dateTime;
+
+    @Column(nullable = false)
+    private BigDecimal distance;
 
     @Column(nullable = false)
     @DecimalMin("0.00")

@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -47,11 +48,6 @@ public class Challenge {
     @Column(nullable = false)
     private int target;
 
-    @Column(nullable = false)
-    @DecimalMin("0.00")
-    @DecimalMax("100")
-    private BigDecimal progress;
-
-    @ManyToMany(mappedBy = "challenges")
-    private List<User> users;
+    @OneToMany(mappedBy = "challenge")
+    private List<UserChallenge> users = new ArrayList<>();
 }

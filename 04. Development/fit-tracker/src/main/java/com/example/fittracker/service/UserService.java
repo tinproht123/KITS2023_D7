@@ -47,4 +47,5 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         userRepository.delete(user);
     }
+
 }
