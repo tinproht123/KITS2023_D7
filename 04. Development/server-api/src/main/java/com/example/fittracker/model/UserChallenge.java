@@ -8,12 +8,15 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+
 import java.io.Serializable;
+
 @Data
 @Entity
 @Table(name = "user_challenges")
 @AllArgsConstructor
 @NoArgsConstructor
+
 @IdClass(UserChallenge.UserChallengeId.class)
 public class UserChallenge {
     @Data

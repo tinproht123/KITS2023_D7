@@ -61,6 +61,7 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
+
         // advanced user
         @GetMapping("/user/search/{query}")
         public ResponseEntity<List<User>> searchFriends(@PathVariable String query) {

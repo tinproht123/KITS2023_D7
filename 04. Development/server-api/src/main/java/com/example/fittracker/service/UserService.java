@@ -2,6 +2,7 @@ package com.example.fittracker.service;
 
 import com.example.fittracker.exception.ResourceNotFoundException;
 import com.example.fittracker.model.User;
+
 import com.example.fittracker.repository.UserFriendsRepository;
 import com.example.fittracker.repository.UserRepository;
 import org.hibernate.annotations.Cache;
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service
 public class UserService {
@@ -54,6 +56,7 @@ public class UserService {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", id));
         userRepository.delete(user);
     }
+
 
     public List<User> searchFriends(String query) {
         return userRepository.findByUsernameContainingIgnoreCaseOrLastNameContainingIgnoreCaseOrFirstNameContainingIgnoreCase(query, query, query);

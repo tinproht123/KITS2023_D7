@@ -5,22 +5,33 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const HomePage = () => {
   return (
-    <Box sx={{ width: "100%", maxWidth: "1440px", marginInline: "auto" }}>
+    <Box sx={{ width: "95%", maxWidth: "1440px", marginInline: "auto" }}>
       {/* HEADER  */}
       <Box position="relative">
-        <img src="/images/bg.webp" alt="image-banner" />
+        <img
+          src="/images/bg.webp"
+          style={{
+            objectFit: "fill",
+            width: "100%",
+          }}
+          alt="image-banner"
+        />
         <Box
           sx={{
-            position: "absolute",
+            position: { md: "absolute" },
             bottom: 200,
             right: 50,
             display: "flex",
             flexDirection: "column",
-            alignItems: "end",
+            alignItems: { xs: "center", md: "end" },
           }}
         >
           <Typography
-            sx={{ fontSize: "80px", fontWeight: 700, color: "#fff" }}
+            sx={{
+              fontSize: { xs: "60px", md: "80px" },
+              fontWeight: 700,
+              color: { md: "#fff" },
+            }}
             mb={4}
             component="h1"
           >
@@ -28,7 +39,9 @@ const HomePage = () => {
           </Typography>
           <Typography
             component="span"
-            color="#fff"
+            sx={{
+              color: { md: "#fff" },
+            }}
             width={400}
             display="inline-block"
             mb={4}
@@ -36,7 +49,14 @@ const HomePage = () => {
             Whether you’re training for a marathon or your biggest season yet,
             we’re here to help you make serious progress.
           </Typography>
-          <StyledButton sx={{ width: "320px" }} type="light">
+          <StyledButton
+            sx={{
+              width: "320px",
+              backgroundColor: { xs: "#000", md: "#fff" },
+              color: { xs: "#fff", md: "#000" },
+            }}
+            mode="light"
+          >
             SIGN UP
           </StyledButton>
           <Typography
@@ -54,17 +74,25 @@ const HomePage = () => {
         </Box>
       </Box>
       {/* SECTION INTRO  */}
-      <Box width="1100px" mx="auto" mt={10}>
+      <Box width="1100px" maxWidth="100%" sx={{ marginInline: "auto" }} mt={10}>
         <Box
-          sx={{ display: "flex", justifyContent: "space-between" }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            flexDirection: { xs: "column-reverse", md: "row" },
+            alignItems: "center",
+          }}
           width="100%"
         >
           <Box
             sx={{
+              width: "100%",
               maxWidth: "400px",
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-evenly",
+              justifyContent: "space-around",
+              alignItems: { xs: "center", md: "start" },
+              textAlign: { xs: "center", md: "left" },
             }}
           >
             <Box
@@ -77,19 +105,21 @@ const HomePage = () => {
                   color: "#000",
                   lineHeight: 1,
                 },
+                width: "100%",
               }}
+              mb={4}
             >
               <Typography component="span">SET GOALS.</Typography>
               <Typography component="span">LOG WORKOUTS.</Typography>
               <Typography component="span">STAY ON TRACK.</Typography>
             </Box>
-            <Typography component="p" fontSize={16}>
+            <Typography component="p" fontSize={16} mb={4}>
               Easily track your Workouts, set Training Plans, and discover new
               Workout Routines to crush your goals.
             </Typography>
             <StyledButton
               sx={{ width: "320px", margin: "0px !important" }}
-              type="dark"
+              mode="dark"
             >
               GET STARTED
             </StyledButton>
@@ -113,13 +143,14 @@ const HomePage = () => {
               padding: "25px",
               borderRadius: "5px",
               display: "flex",
-              alignItems: "center",
+              alignItems: { xs: "start", md: "center" },
+              flexDirection: { xs: "column", md: "row" },
             }}
           >
             <Box
               sx={{
                 width: "100%",
-                maxWidth: "600px",
+                maxWidth: { sx: "100%", md: "600px" },
                 height: "300px",
                 "& > img": {
                   width: "100%",
@@ -128,15 +159,15 @@ const HomePage = () => {
                 },
               }}
             >
-              <img src="/images/img-2.jpg" alt="challenge-image" />
+              <img src="/images/img-2.jpg" width="100%" alt="challenge-image" />
             </Box>
-            <Box p={5}>
+            <Box sx={{ padding: { xs: 0, md: 5 } }}>
               <Typography
                 component="h5"
                 color="#fff"
                 fontWeight={700}
                 fontSize={35}
-                mb={5}
+                mb={3}
               >
                 YOU VS THE YEAR 2023
               </Typography>
@@ -169,20 +200,28 @@ const HomePage = () => {
           >
             Hit milestones and PR’s by taking on a new challenge every month.
           </Typography>
-          <StyledButton sx={{ width: "280px" }} type="dark">
+          <StyledButton sx={{ width: "280px" }} mode="dark">
             JOIN A CHALLENGE
           </StyledButton>
         </Box>
-        <Box sx={{ display: "flex", height: "700px" }} mt={10}>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: { xs: "column-reverse", md: "row" },
+          }}
+          mt={10}
+        >
           <Box
             sx={{
               width: "100%",
-              maxWidth: "400px",
+              maxWidth: { md: "400px" },
               color: "#000",
+              textAlign: { xs: "center", md: "left" },
             }}
           >
             <Typography
-              fontSize={45}
+              fontSize={55}
               color="#000"
               fontWeight={700}
               lineHeight={1}
@@ -201,6 +240,7 @@ const HomePage = () => {
                 "& > h6": {
                   fontWeight: 600,
                 },
+                marginInline: { xs: "auto", md: "0" },
               }}
             >
               <Typography variant="h6">Smarter Training</Typography>
@@ -222,7 +262,7 @@ const HomePage = () => {
             </Box>
           </Box>
           <Box>
-            <img src="/images/img-3.png" alt="image" />
+            <img src="/images/img-3.png" width="100%" alt="image" />
           </Box>
         </Box>
       </Box>
@@ -231,34 +271,61 @@ const HomePage = () => {
         sx={{
           backgroundColor: "#000",
           borderRadius: "5px",
-          padding: "100px",
+          padding: "100px 0",
         }}
       >
         <Box
           sx={{
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: { xs: "column", md: "row" },
+            marginInline: { xs: 0, md: "200px" },
           }}
         >
-          <Box sx={{ textAlign: "center", color: "#fff" }} width="350px">
-            <FontAwesomeIcon icon="fa-solid fa-road" />
-            <Typography>MILES LOGGED</Typography>
-            <Typography>5.2</Typography>
-            <Typography>Billion</Typography>
+          <Box sx={{ textAlign: "center", color: "#fff" }} py={2} width="350px">
+            <FontAwesomeIcon icon="fa-solid fa-road" size="2xl" color="red" />
+            <Typography mt={2} fontSize={16} fontWeight={600}>
+              MILES LOGGED
+            </Typography>
+            <Typography fontSize={80} fontWeight={700}>
+              5.2
+            </Typography>
+            <Typography fontWeight={700} fontSize={22}>
+              Billion
+            </Typography>
           </Box>
-          <Box sx={{ textAlign: "center", color: "#fff" }} width="350px">
-            <FontAwesomeIcon icon="fa-solid fa-user-group" />
-            <Typography>USERS ACTIVE</Typography>
-            <Typography fontSize={65} fontWeight={700}>
+          <Box sx={{ textAlign: "center", color: "#fff" }} py={2} width="350px">
+            <FontAwesomeIcon
+              icon="fa-solid fa-user-group"
+              size="2xl"
+              color="red"
+            />
+            <Typography mt={2} fontSize={16} fontWeight={600}>
+              USERS ACTIVE
+            </Typography>
+            <Typography fontSize={80} fontWeight={700}>
               14
             </Typography>
-            <Typography>Million</Typography>
+            <Typography fontWeight={700} fontSize={22}>
+              Million
+            </Typography>
           </Box>
-          <Box sx={{ textAlign: "center", color: "#fff" }} width="350px">
-            <FontAwesomeIcon icon="fa-solid fa-person-running" />
-            <Typography>WORKOUTS LOGGED</Typography>
-            <Typography>1.2</Typography>
-            <Typography>Billion</Typography>
+          <Box sx={{ textAlign: "center", color: "#fff" }} py={2} width="350px">
+            <FontAwesomeIcon
+              icon="fa-solid fa-person-running"
+              size="2xl"
+              color="red"
+            />
+            <Typography mt={2} fontSize={16} fontWeight={600}>
+              WORKOUTS LOGGED
+            </Typography>
+            <Typography fontSize={80} fontWeight={700}>
+              1.2
+            </Typography>
+            <Typography fontWeight={700} fontSize={22}>
+              Billion
+            </Typography>
           </Box>
         </Box>
       </Box>
