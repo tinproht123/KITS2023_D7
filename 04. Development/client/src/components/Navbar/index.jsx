@@ -11,9 +11,10 @@ import {
 } from "@mui/material";
 import StyledButton from "../StyledButton";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { grey } from "@mui/material/colors";
+import { useSelector } from "react-redux";
 
 const navItems = [
   {
@@ -44,7 +45,10 @@ const navItems = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-
+  const { isLogin } = useSelector((state) => state.auth);
+  useEffect(() => {
+    console.log(isLogin);
+  });
   return (
     <>
       {/* DRAWER  */}
@@ -59,14 +63,16 @@ const Navbar = () => {
       >
         <Box sx={{ width: "100%" }}>
           <Box height="60px"></Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Link to="/auth/login">
-              <StyledButton mode="light">LOG IN</StyledButton>
-            </Link>
-            <Link to="/auth/signup">
-              <StyledButton mode="dark">SIGN UP</StyledButton>
-            </Link>
-          </Box>
+          {!isLogin && (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Link to="/auth/login">
+                <StyledButton mode="light">LOG IN</StyledButton>
+              </Link>
+              <Link to="/auth/signup">
+                <StyledButton mode="dark">SIGN UP</StyledButton>
+              </Link>
+            </Box>
+          )}
           {navItems.map((item, idx) => (
             <Accordion
               key={idx}
@@ -116,7 +122,7 @@ const Navbar = () => {
             width: "100%",
             maxWidth: { xs: "1920px", md: "1440px" },
             mx: "auto",
-            zIndex: { xs: 99, md: 10 },
+            zIndex: { xs: 9999, md: 10 },
           }}
         >
           <Toolbar
@@ -213,12 +219,16 @@ const Navbar = () => {
             <Box
               sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
             >
-              <Link to="/auth/login">
-                <StyledButton mode="light">LOG IN</StyledButton>
-              </Link>
-              <Link to="/auth/signup">
-                <StyledButton mode="dark">SIGN UP</StyledButton>
-              </Link>
+              {!isLogin && (
+                <>
+                  <Link to="/auth/login">
+                    <StyledButton mode="light">LOG IN</StyledButton>
+                  </Link>
+                  <Link to="/auth/signup">
+                    <StyledButton mode="dark">SIGN UP</StyledButton>
+                  </Link>
+                </>
+              )}
             </Box>
           </Toolbar>
         </AppBar>

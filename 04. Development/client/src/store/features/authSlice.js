@@ -28,9 +28,10 @@ export const signUp = createAsyncThunk(
 
 export const login = createAsyncThunk(
   "auth/login",
-  async (loginData, { rejectWithValue }) => {
+  async ({ loginData }, { rejectWithValue }) => {
     try {
       const res = await axios.post(`${API}/signin`, loginData);
+      toast.success("Log In Successfully!");
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
