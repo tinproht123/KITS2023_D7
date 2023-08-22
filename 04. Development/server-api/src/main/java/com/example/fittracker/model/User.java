@@ -8,6 +8,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.springframework.cglib.core.Local;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -15,6 +16,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -61,9 +63,10 @@ public class User {
 
     @Column
     @Temporal(TemporalType.TIMESTAMP)
-    @DateTimeFormat(pattern = "yyyy-MM-dd ")
-    private LocalDateTime
-            birthday;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime birthday;
+
 
     @Column
     private String city;
@@ -110,7 +113,9 @@ public class User {
     )
     private List<Achievement> achievements = new ArrayList<>();
 
+
     public User(String firstName, String lastName, String username, String email, String password, String birthday, String gender, String country, String city) {
+
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -120,5 +125,6 @@ public class User {
         this.gender = gender;
         this.country = country;
         this.city = city;
+
     }
 }
