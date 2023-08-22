@@ -23,17 +23,6 @@ const MainLayout = () => {
             flex: "1 1 auto",
           }}
         >
-          {/* <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/auth">
-              <Route path="signup" element={<SignUp />} />
-              <Route path="login" element={<Login />} />
-              <Route path="forgot_password" element={<ForgotPassword />} />
-              <Route path="challenges" element={<Challenges />} />
-              <Route path="people/friends" element={<Friends />} />
-            </Route>
-            <Route path="*" element={<Page_404 />} />
-          </Routes> */}
           <Outlet />
         </Box>
         <Footer />

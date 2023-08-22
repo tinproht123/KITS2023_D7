@@ -116,7 +116,7 @@ const Navbar = () => {
             width: "100%",
             maxWidth: { xs: "1920px", md: "1440px" },
             mx: "auto",
-            zIndex: { xs: 9999, md: 10 },
+            zIndex: { xs: 99, md: 10 },
           }}
         >
           <Toolbar
