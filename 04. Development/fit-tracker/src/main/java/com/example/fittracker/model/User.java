@@ -52,7 +52,7 @@ public class User {
 //    @Pattern(regexp = "^[a-zA-Z0-9]{8,16}$")
 //    @Pattern(regexp = "^[a-zA-Z0-9]{6,}$")
     private String password;
-
+    private String token;
     @Column
     private String gender;
 
@@ -67,7 +67,7 @@ public class User {
     @Column
     private String country;
 
-//    @Column(nullable = false)
+    //    @Column(nullable = false)
     @DecimalMin("0.01")
     private BigDecimal weight;
 
@@ -105,6 +105,7 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "achievement_id")
     )
     private List<Achievement> achievements = new ArrayList<>();
+
 
     public User(String firstName, String lastName, String username, String email, String password) {
         this.firstName = firstName;
