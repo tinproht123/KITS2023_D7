@@ -13,7 +13,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -36,11 +38,16 @@ public class UserController {
             List<User> users = userService.getAllUsers();
             return new ResponseEntity<>(users, HttpStatus.OK);
         }
-        @PostMapping("/user")
-        public ResponseEntity<User> createUser(@RequestBody User user) {
-            User savedUser = userService.saveUser(user);
-            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
-        }
+//        @PostMapping("/user")
+//        public ResponseEntity<User> createUser(@RequestBody User user) {
+//            User savedUser = userService.saveUser(user);
+//            return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
+//        }
+@PostMapping(value = "/user/add", consumes = "multipart/form-data")
+public ResponseEntity<User> saveUser(@ModelAttribute User user, @RequestParam("imageFile") MultipartFile imageFile) throws IOException {
+    User savedBook = userService.saveUser(user, imageFile);
+    return ResponseEntity.ok(savedBook);
+}
         @GetMapping("/user/{id}")
         public ResponseEntity<User> getUserById(@PathVariable Long id) {
             User user = userService.getUserById(id);

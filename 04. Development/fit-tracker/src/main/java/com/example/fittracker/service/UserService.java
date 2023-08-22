@@ -3,9 +3,13 @@ package com.example.fittracker.service;
 import com.example.fittracker.exception.ResourceNotFoundException;
 import com.example.fittracker.model.User;
 import com.example.fittracker.repository.UserRepository;
+import com.example.fittracker.upload.FileUploadUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
@@ -16,9 +20,23 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User saveUser(User user) {
-        return userRepository.save(user);
+
+
+    public User saveUser(User user, MultipartFile imageFile) throws IOException {
+        String fileName = StringUtils.cleanPath(imageFile.getOriginalFilename());
+        user.setImage(fileName);
+
+        User savedUser = userRepository.save(user);
+
+        String uploadDir = "image/" + savedUser.getUserId();
+
+        FileUploadUtil.saveFile(uploadDir, fileName, imageFile);
+
+        // Save the book to your data store
+
+        return savedUser;
     }
+
 
     public User getUserById(Long id) {
         return userRepository.findById(id)
