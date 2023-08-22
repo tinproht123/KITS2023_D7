@@ -12,15 +12,16 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import dayjs from "dayjs";
 import country_list from "../../mock/country";
 import StyledButton from "../../components/StyledButton";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { signUp } from "../../store/features/authSlice";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object({
   username: yup
@@ -63,6 +64,20 @@ const SignUp = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+
+  const { isLogin, error } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+
+  if (isLogin) {
+    navigate("/dashboard");
+  }
+
+  useEffect(() => {
+    if (error !== null) {
+      toast.error(error);
+    }
+  }, [error]);
 
   const formik = useFormik({
     initialValues: {

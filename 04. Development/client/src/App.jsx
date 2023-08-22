@@ -7,6 +7,8 @@ import {
   faAngleDown,
   faAward,
   faBars,
+  faChevronLeft,
+  faChevronRight,
   faDumbbell,
   faGear,
   faHouse,
@@ -19,6 +21,7 @@ import {
   faPersonRunning,
   faPersonSwimming,
   faPersonWalking,
+  faPlus,
   faRoad,
   faShieldHalved,
   faTrophy,
@@ -44,13 +47,17 @@ import Challenges from "./pages/Challenges";
 import Friends from "./pages/Friends";
 import MainLayout from "./components/Layouts/MainLayout";
 import AdminLayout from "./components/Layouts/AdminLayout";
-import Dashboard from "./pages/admin/General/Dashboard";
+import AdminDashboard from "./pages/admin/General/Dashboard";
 import Activities from "./pages/admin/Data/Activities";
 import CommunityPosts from "./pages/admin/Data/CommunityPosts";
 import Users from "./pages/admin/Data/Users";
 import Achivements from "./pages/admin/Data/Achivements";
 import ActivityForm from "./pages/admin/Form/ActivityForm";
 import AchivementForm from "./pages/admin/Form/AchivementForm";
+import Dashboard from "./pages/Dashboard";
+import AddWorkout from "./pages/AddWorkout";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 library.add(
   faPersonRunning,
@@ -80,7 +87,10 @@ library.add(
   faPersonBiking,
   faPersonHiking,
   faPersonWalking,
-  faPersonSwimming
+  faPersonSwimming,
+  faChevronLeft,
+  faChevronRight,
+  faPlus
 );
 
 function App() {
@@ -106,11 +116,22 @@ function App() {
     <ThemeProvider theme={theme}>
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <CssBaseline />
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          theme="light"
+          style={{ zIndex: 999 }}
+        />
         <BrowserRouter>
           <Routes>
             {/* ADMIN CONTROL PANEL */}
             <Route path="/admin" element={<AdminLayout />}>
-              <Route index element={<Dashboard />} />
+              <Route index element={<AdminDashboard />} />
               <Route path="users" element={<Users />} />
               <Route path="activities" element={<Activities />} />
               <Route path="community-posts" element={<CommunityPosts />} />
@@ -127,8 +148,10 @@ function App() {
                 <Route path="login" element={<Login />} />
                 <Route path="forgot_password" element={<ForgotPassword />} />
               </Route>
+              <Route path="dashboard" element={<Dashboard />} />
               <Route path="challenges" element={<Challenges />} />
               <Route path="people/friends" element={<Friends />} />
+              <Route path="add-workout" element={<AddWorkout />} />
               <Route path="*" element={<Page_404 />} />
             </Route>
           </Routes>

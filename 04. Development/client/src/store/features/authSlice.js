@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import BASE_API from "../../mock/api";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const API = `${BASE_API}/api/auth`;
 
@@ -13,11 +14,13 @@ const initialState = {
 
 export const signUp = createAsyncThunk(
   "auth/signUp",
-  async (userData, { rejectWithValue }) => {
+  async ({ userData }, { rejectWithValue }) => {
     try {
       const res = await axios.post(`${API}/signup`, userData);
+      toast.success("Sign Up Successfully!");
       return res.data;
     } catch (error) {
+      console.log(rejectWithValue(error.response.data.message));
       return rejectWithValue(error.response.data.message);
     }
   }
@@ -67,7 +70,7 @@ const authSlice = createSlice({
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
-        state.error = action;
+        state.error = action.payload;
       });
   },
 });

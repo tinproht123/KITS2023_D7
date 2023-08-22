@@ -1,11 +1,11 @@
 import { Box, Typography } from "@mui/material";
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   return (
     <Box sx={{ border: "1px solid red" }}>
-      <Typography>Dashboard</Typography>
+      <Typography>Admin Dashboard</Typography>
     </Box>
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;
