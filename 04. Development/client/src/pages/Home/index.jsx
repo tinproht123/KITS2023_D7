@@ -1,9 +1,18 @@
 import { Box, Typography } from "@mui/material";
 import StyledButton from "../../components/StyledButton";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
+  const { isLogin } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+
+  if (isLogin) {
+    navigate("/dashboard");
+  }
+
   return (
     <Box sx={{ width: "95%", maxWidth: "1440px", marginInline: "auto" }}>
       {/* HEADER  */}
