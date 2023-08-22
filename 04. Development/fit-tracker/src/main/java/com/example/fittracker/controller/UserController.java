@@ -61,6 +61,23 @@ public class UserController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
+        // advanced user
+        @GetMapping("/user/search/{query}")
+        public ResponseEntity<List<User>> searchFriends(@PathVariable String query) {
+            List<User> friends = userService.searchFriends(query);
+            return new ResponseEntity<>(friends, HttpStatus.OK);
+        }
+        @PostMapping("/user/{userId}/sendFriendRequest/{friendId}")
+        public ResponseEntity<String> sendFriendRequest(@PathVariable Long userId, @PathVariable Long friendId) {
+            boolean success = userService.sendFriendRequest(userId, friendId);
+
+            if (success) {
+                return new ResponseEntity<>("Friend request sent successfully", HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Failed to send friend request", HttpStatus.BAD_REQUEST);
+            }
+        }
+
     // goal
 
         @GetMapping("/goal")
