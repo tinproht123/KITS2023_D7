@@ -35,8 +35,12 @@ public class UserChallenge {
     @JoinColumn(name = "challenge_id")
     private Challenge challenge;
 
-    @Column(nullable = false)
     @DecimalMin("0.00")
     @DecimalMax("100")
     private BigDecimal progress;
+
+    public UserChallenge(User user, Challenge challenge) {
+        this.user = user;
+        this.challenge = challenge;
+    }
 }

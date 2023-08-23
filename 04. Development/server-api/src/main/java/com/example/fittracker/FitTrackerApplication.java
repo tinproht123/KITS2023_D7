@@ -8,6 +8,8 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootApplication
 @EnableCaching
 
+
+
 public class FitTrackerApplication {
 
 	public static void main(String[] args) {

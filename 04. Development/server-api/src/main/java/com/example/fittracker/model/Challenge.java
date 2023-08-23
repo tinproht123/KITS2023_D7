@@ -46,7 +46,21 @@ public class Challenge {
     private String prize;
 
     @Column(nullable = false)
-    private int target;
+    private BigDecimal target;
+
+    @ManyToMany
+    @JoinTable(
+            name = "challenge_activities",
+            joinColumns = @JoinColumn(name = "challenge_id"),
+            inverseJoinColumns = @JoinColumn(name = "activity_id")
+    )
+    private List<Activity> activities = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "challenge")
+//    private List<ChallengeActivity> challengeActivities = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "challenge")
+//    private List<UserChallenge> userChallenges = new ArrayList<>();
 
     @OneToMany(mappedBy = "challenge")
     private List<UserChallenge> users = new ArrayList<>();

@@ -1,19 +1,18 @@
 package com.example.fittracker.controller;
 
 import com.example.fittracker.model.*;
+import com.example.fittracker.payload.challenge.ChallengeStats;
 import com.example.fittracker.payload.workout.CreateGoalRequest;
 import com.example.fittracker.payload.workout.CreateWorkoutRequest;
 import com.example.fittracker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -222,11 +221,19 @@ public class UserController {
             return ResponseEntity.ok(totalTime);
         }
     // challenge
-//        @PostMapping("/challenge/{challenge_id}/{user_id}")
-//        public ResponseEntity<UserChallenge> createUserChallenge(@PathVariable("challenge_id") Long challengeId, @PathVariable("user_id") Long userId) {
-//            UserChallenge userChallenge = userChallengeService.saveUserChallenge(challengeId, userId);
-//            return new ResponseEntity<>(userChallenge, HttpStatus.CREATED);
-//        }
+        @PostMapping("/challenge/join/{user_id}/{challenge_id}")
+        public ResponseEntity<String> joinChallenge(
+                @PathVariable("user_id") Long userId,
+                @PathVariable("challenge_id") Long challengeId) {
+            userChallengeService.joinChallenge(userId, challengeId);
+            return ResponseEntity.ok("User joined the challenge successfully.");
+        }
+
+        // advanced
+        @GetMapping("/challenge/{userId}/{challengeId}")
+        public ChallengeStats getChallengeStats(@PathVariable Long userId, @PathVariable Long challengeId) {
+            return userChallengeService.getChallengeStats(userId, challengeId);
+        }
     // report
 
         @PostMapping("/reports")
@@ -236,5 +243,12 @@ public class UserController {
         }
 
     // post
+        @Autowired
+        ImageService imageService;
+        @PostMapping("/test")
+        public String uploadImage(@RequestParam("file") MultipartFile file){
+              String url=  imageService.create(file);
+              return url;
+        }
 
 }

@@ -114,17 +114,29 @@ public class User {
     private List<Achievement> achievements = new ArrayList<>();
 
 
-    public User(String firstName, String lastName, String username, String email, String password, String birthday, String gender, String country, String city) {
+//    public User(String firstName, String lastName, String username, String email, String password, LocalDateTime birthday, String gender, String country, String city, String image) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.username = username;
+//        this.email = email;
+//        this.password = password;
+//        this.birthday = LocalDate.parse(birthday, DateTimeFormatter.ISO_DATE).atStartOfDay();
+//        this.gender = gender;
+//        this.country = country;
+//        this.city = city;
+//        this.image = image;
+//    }
 
+    public User(String firstName, String lastName, String username, String email, String password, LocalDateTime birthday, String gender, String country, String city, String image) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.birthday = LocalDate.parse(birthday, DateTimeFormatter.ISO_DATE).atStartOfDay();
+        this.birthday = birthday;
         this.gender = gender;
         this.country = country;
         this.city = city;
-
+        this.image = image;
     }
 }

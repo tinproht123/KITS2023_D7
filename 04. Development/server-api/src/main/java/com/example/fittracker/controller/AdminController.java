@@ -3,14 +3,14 @@ package com.example.fittracker.controller;
 import com.example.fittracker.model.Achievement;
 import com.example.fittracker.model.Activity;
 import com.example.fittracker.model.Challenge;
-import com.example.fittracker.service.AchievementService;
-import com.example.fittracker.service.ActivityService;
-import com.example.fittracker.service.ChallengeService;
+import com.example.fittracker.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @RestController
@@ -23,6 +23,10 @@ public class AdminController {
     private ChallengeService challengeService;
     @Autowired
     private AchievementService achievementService;
+    @Autowired
+    private ChallengeActivityService challengeActivityService;
+    @Autowired
+    private ImageService imageService;
 
     // activity
     @GetMapping("/activities")
@@ -30,10 +34,12 @@ public class AdminController {
         List<Activity> activities = activityService.getAllActivities();
         return new ResponseEntity<>(activities, HttpStatus.OK);
     }
+
     @PostMapping("/activities")
     public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
         Activity savedActivity = activityService.saveActivity(activity);
         return new ResponseEntity<>(savedActivity, HttpStatus.CREATED);
+
     }
     @GetMapping("/activities/{id}")
     public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
@@ -76,6 +82,11 @@ public class AdminController {
     public ResponseEntity<HttpStatus> deleteChallenge(@PathVariable Long id) {
         challengeService.deleteChallenge(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    @PostMapping("/challenge/{challenge_id}/{activity_id}")
+    public ResponseEntity<?> createChallengeActivity(@PathVariable("challenge_id") Long challengeId, @PathVariable("activity_id") Long activityId) {
+        challengeActivityService.createChallengeActivity(challengeId, activityId);
+        return ResponseEntity.ok().build();
     }
 
     // achievement
