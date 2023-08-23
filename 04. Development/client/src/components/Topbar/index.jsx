@@ -25,7 +25,6 @@ const Topbar = () => {
       justifyContent="space-between"
       p={2}
       backgroundColor="#fff"
-      border="1px solid red"
     >
       <Box display="flex" borderRadius="3px" backgroundColor="#f9f9f9">
         <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />

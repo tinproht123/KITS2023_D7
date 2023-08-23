@@ -10,6 +10,7 @@ const initialState = {
   user: {},
   error: null,
   isLogin: false,
+  token: "",
 };
 
 export const signUp = createAsyncThunk(
@@ -32,6 +33,7 @@ export const login = createAsyncThunk(
     try {
       const res = await axios.post(`${API}/signin`, loginData);
       toast.success("Log In Successfully!");
+      console.log(res.data);
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -42,7 +44,12 @@ export const login = createAsyncThunk(
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logout: (state) => {
+      state.isLogin = false;
+      state.user = {};
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(signUp.pending, (state) => {
@@ -50,10 +57,8 @@ const authSlice = createSlice({
         state.error = null;
         state.isLogin = false;
       })
-      .addCase(signUp.fulfilled, (state, action) => {
+      .addCase(signUp.fulfilled, (state) => {
         state.isLoading = false;
-        state.user = action.payload;
-        state.isLogin = true;
       })
       .addCase(signUp.rejected, (state, action) => {
         state.isLoading = false;
@@ -77,3 +82,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
+export const { logout } = authSlice.actions;
