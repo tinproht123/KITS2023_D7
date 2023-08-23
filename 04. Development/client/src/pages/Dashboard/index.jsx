@@ -2,8 +2,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import dayjs from "dayjs";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const [monthly, setMonthly] = useState(dayjs().format("MMM YYYY"));
@@ -13,6 +14,8 @@ const Dashboard = () => {
     const prevMonth = parsedDate.subtract(1, "month");
     setMonthly(prevMonth.format("MMM YYYY"));
   };
+  const { isLogin } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
 
   const nextWeek = () => {
     const parsedDate = dayjs(monthly, "MMM YYYY");
@@ -66,7 +69,11 @@ const Dashboard = () => {
     },
   ];
 
-  console.log(dayjs(monthly).month() === dayjs().month());
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/auth/login");
+    }
+  }, [isLogin, navigate]);
 
   return (
     <Box p={10}>
