@@ -247,7 +247,12 @@ const Navbar = () => {
                   </Link>
                 </>
               ) : (
-                <Box display="flex" position="relative">
+                <Box
+                  display="flex"
+                  position="relative"
+                  cursor="pointer"
+                  borderRadius={999}
+                >
                   <Box
                     onClick={handleClick}
                     aria-controls={open ? "basic-menu" : undefined}
@@ -260,11 +265,17 @@ const Navbar = () => {
                   >
                     <img
                       src={`/images/${
-                        user.image === undefined
+                        user.image === null
                           ? "blank-profile-picture.png"
                           : user.image
                       }`}
                       width="100%"
+                      height="100%"
+                      style={{
+                        display: "block",
+                        objectFit: "cover",
+                        borderRadius: 999,
+                      }}
                     />
                   </Box>
                   <Menu

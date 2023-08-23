@@ -44,7 +44,7 @@ const Login = () => {
     },
   });
 
-  const { isLogin } = useSelector((state) => state.auth);
+  const { isLogin, user } = useSelector((state) => state.auth);
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
@@ -52,7 +52,8 @@ const Login = () => {
     event.preventDefault();
   };
   if (isLogin) {
-    navigate("/dashboard");
+    if (user.role === "ROLE_ADMIN") navigate("/admin");
+    else navigate("/dashboard");
   }
 
   return (
