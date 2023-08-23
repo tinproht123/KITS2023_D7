@@ -97,8 +97,12 @@ const SignUp = () => {
         ...val,
         birthday: val.birthday.format("YYYY-MM-DD"),
       };
-      console.log(userData);
-      dispatch(signUp({ userData }));
+      try {
+        dispatch(signUp({ userData }));
+        navigate("/auth/login");
+      } catch (error) {
+        toast.error(error);
+      }
     },
   });
   return (

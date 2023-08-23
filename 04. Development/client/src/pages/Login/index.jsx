@@ -9,13 +9,13 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import StyledButton from "../../components/StyledButton";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/features/authSlice";
 
 const validationSchema = yup.object({
@@ -32,6 +32,7 @@ const validationSchema = yup.object({
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -39,16 +40,20 @@ const Login = () => {
     },
     validationSchema,
     onSubmit: (val) => {
-      console.log(val);
       dispatch(login({ loginData: val }));
     },
   });
+
+  const { isLogin } = useSelector((state) => state.auth);
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  if (isLogin) {
+    navigate("/dashboard");
+  }
 
   return (
     <Box
