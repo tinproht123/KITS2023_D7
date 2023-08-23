@@ -45,7 +45,7 @@ const AdminDashboard = () => {
           </Typography>
           <Box display="flex" alignItems={"center"} color="#d2042d">
             <Typography fontWeight={700} fontSize={50} mr={2}>
-              3352
+              3,352
             </Typography>
             <FontAwesomeIcon icon="fa-solid fa-user-group" size="xl" />
           </Box>
@@ -87,7 +87,7 @@ const AdminDashboard = () => {
           </Typography>
           <Box display="flex" alignItems={"center"} color="#187bcd">
             <Typography fontWeight={700} fontSize={50} mr={2}>
-              12701
+              167,341
             </Typography>
             <FontAwesomeIcon icon="fa-solid fa-dumbbell" size="xl" />
           </Box>
@@ -166,18 +166,18 @@ const AdminDashboard = () => {
               series={[
                 {
                   data: [
-                    { id: 0, value: 2528, label: "Running" },
-                    { id: 1, value: 2452, label: "Walking" },
-                    { id: 2, value: 498, label: "Hiking" },
-                    { id: 3, value: 320, label: "Swimming" },
-                    { id: 4, value: 356, label: "Weightlifting" },
-                    { id: 5, value: 1920, label: "Biking" },
-                    { id: 6, value: 1254, label: "Yoga" },
-                    { id: 7, value: 553, label: "Pushups" },
-                    { id: 8, value: 426, label: "Crunch" },
-                    { id: 9, value: 748, label: "Dumbbel Lift" },
-                    { id: 10, value: 323, label: "Bicyle Crunch" },
-                    { id: 11, value: 1323, label: "Aerobic" },
+                    { id: 0, value: 32528, label: "Running" },
+                    { id: 1, value: 22452, label: "Walking" },
+                    { id: 2, value: 6498, label: "Hiking" },
+                    { id: 3, value: 9320, label: "Swimming" },
+                    { id: 4, value: 5256, label: "Weightlifting" },
+                    { id: 5, value: 19720, label: "Biking" },
+                    { id: 6, value: 11254, label: "Yoga" },
+                    { id: 7, value: 18553, label: "Pushups" },
+                    { id: 8, value: 14626, label: "Crunch" },
+                    { id: 9, value: 7488, label: "Dumbbel Lift" },
+                    { id: 10, value: 3123, label: "Bicyle Crunch" },
+                    { id: 11, value: 13523, label: "Aerobic" },
                   ],
                 },
               ]}
