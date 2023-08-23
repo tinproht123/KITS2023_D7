@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/admin")
+@RequestMapping("/api/admins")
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class AdminController {
     @Autowired
@@ -25,54 +25,54 @@ public class AdminController {
     private AchievementService achievementService;
 
     // activity
-    @GetMapping("/activity")
+    @GetMapping("/activities")
     public ResponseEntity<List<Activity>> getAllActivities() {
         List<Activity> activities = activityService.getAllActivities();
         return new ResponseEntity<>(activities, HttpStatus.OK);
     }
-    @PostMapping("/activity")
+    @PostMapping("/activities")
     public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) {
         Activity savedActivity = activityService.saveActivity(activity);
         return new ResponseEntity<>(savedActivity, HttpStatus.CREATED);
     }
-    @GetMapping("/activity/{id}")
+    @GetMapping("/activities/{id}")
     public ResponseEntity<Activity> getActivityById(@PathVariable Long id) {
         Activity activity = activityService.getActivityById(id);
         return new ResponseEntity<>(activity, HttpStatus.OK);
     }
-    @PutMapping("/activity/{id}")
+    @PutMapping("/activities/{id}")
     public ResponseEntity<Activity> updateActivity(@PathVariable Long id, @RequestBody Activity activityDetails) {
         Activity updatedActivity = activityService.updateActivity(id, activityDetails);
         return new ResponseEntity<>(updatedActivity, HttpStatus.OK);
     }
-    @DeleteMapping("/activity/{id}")
+    @DeleteMapping("/activities/{id}")
     public ResponseEntity<HttpStatus> deleteActivity(@PathVariable Long id) {
         activityService.deleteActivity(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     // challenge
-    @GetMapping("/challenge")
+    @GetMapping("/challenges")
     public ResponseEntity<List<Challenge>> getAllChallenges() {
         List<Challenge> challenges = challengeService.getAllChallenges();
         return new ResponseEntity<>(challenges, HttpStatus.OK);
     }
-    @PostMapping("/challenge")
+    @PostMapping("/challenges")
     public ResponseEntity<Challenge> createChallenge(@RequestBody Challenge challenge) {
         Challenge savedChallenge = challengeService.saveChallenge(challenge);
         return new ResponseEntity<>(savedChallenge, HttpStatus.CREATED);
     }
-    @GetMapping("/challenge/{id}")
+    @GetMapping("/challenges/{id}")
     public ResponseEntity<Challenge> getChallengeById(@PathVariable Long id) {
         Challenge challenge = challengeService.getChallengeById(id);
         return new ResponseEntity<>(challenge, HttpStatus.OK);
     }
-    @PutMapping("/challenge/{id}")
+    @PutMapping("/challenges/{id}")
     public ResponseEntity<Challenge> updateChallenge(@PathVariable Long id, @RequestBody Challenge challengeDetails) {
         Challenge updatedChallenge = challengeService.updateChallenge(id, challengeDetails);
         return new ResponseEntity<>(updatedChallenge, HttpStatus.OK);
     }
-    @DeleteMapping("/challenge/{id}")
+    @DeleteMapping("/challenges/{id}")
     public ResponseEntity<HttpStatus> deleteChallenge(@PathVariable Long id) {
         challengeService.deleteChallenge(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -80,27 +80,27 @@ public class AdminController {
 
     // achievement
 
-    @GetMapping("/achievement")
+    @GetMapping("/achievements")
     public ResponseEntity<List<Achievement>> getAllAchievements() {
         List<Achievement> achievements = achievementService.getAllAchievements();
         return new ResponseEntity<>(achievements, HttpStatus.OK);
     }
-    @PostMapping("/achievement")
+    @PostMapping("/achievements")
     public ResponseEntity<Achievement> createAchievement(@RequestBody Achievement achievement) {
         Achievement savedAchievement = achievementService.saveAchievement(achievement);
         return new ResponseEntity<>(savedAchievement, HttpStatus.CREATED);
     }
-    @GetMapping("/achievement/{id}")
+    @GetMapping("/achievements/{id}")
     public ResponseEntity<Achievement> getAchievementById(@PathVariable Long id) {
         Achievement achievement = achievementService.getAchievementById(id);
         return new ResponseEntity<>(achievement, HttpStatus.OK);
     }
-    @PutMapping("/achievement/{id}")
+    @PutMapping("/achievements/{id}")
     public ResponseEntity<Achievement> updateAchievement(@PathVariable Long id, @RequestBody Achievement achievementDetails) {
         Achievement updatedAchievement = achievementService.updateAchievement(id, achievementDetails);
         return new ResponseEntity<>(updatedAchievement, HttpStatus.OK);
     }
-    @DeleteMapping("/achievement/{id}")
+    @DeleteMapping("/achievements/{id}")
     public ResponseEntity<HttpStatus> deleteAchievement(@PathVariable Long id) {
         achievementService.deleteAchievement(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

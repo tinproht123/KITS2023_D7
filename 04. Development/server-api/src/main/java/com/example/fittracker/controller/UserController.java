@@ -35,27 +35,27 @@ public class UserController {
 
     // user
 
-        @GetMapping("/user")
+        @GetMapping("/users")
         public ResponseEntity<List<User>> getAllUsers() {
             List<User> users = userService.getAllUsers();
             return new ResponseEntity<>(users, HttpStatus.OK);
         }
-        @PostMapping("/user")
+        @PostMapping("/users")
         public ResponseEntity<User> createUser(@RequestBody User user) {
             User savedUser = userService.saveUser(user);
             return new ResponseEntity<>(savedUser, HttpStatus.CREATED);
         }
-        @GetMapping("/user/{id}")
+        @GetMapping("/users/{id}")
         public ResponseEntity<User> getUserById(@PathVariable Long id) {
             User user = userService.getUserById(id);
             return new ResponseEntity<>(user, HttpStatus.OK);
         }
-        @PutMapping("/user/{id}")
+        @PutMapping("/users/{id}")
         public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
             User updatedUser = userService.updateUser(id, userDetails);
             return new ResponseEntity<>(updatedUser, HttpStatus.OK);
         }
-        @DeleteMapping("/user/{id}")
+        @DeleteMapping("/users/{id}")
         public ResponseEntity<HttpStatus> deleteUser(@PathVariable Long id) {
             userService.deleteUser(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -63,12 +63,12 @@ public class UserController {
 
 
         // advanced user
-        @GetMapping("/user/search/{query}")
+        @GetMapping("/users/search/{query}")
         public ResponseEntity<List<User>> searchFriends(@PathVariable String query) {
             List<User> friends = userService.searchFriends(query);
             return new ResponseEntity<>(friends, HttpStatus.OK);
         }
-        @PostMapping("/user/{userId}/sendFriendRequest/{friendId}")
+        @PostMapping("/users/{userId}/sendFriendRequest/{friendId}")
         public ResponseEntity<String> sendFriendRequest(@PathVariable Long userId, @PathVariable Long friendId) {
             boolean success = userService.sendFriendRequest(userId, friendId);
 
@@ -81,29 +81,29 @@ public class UserController {
 
     // goal
 
-        @GetMapping("/goal")
+        @GetMapping("/goals")
         public ResponseEntity<List<Goal>> getAllGoals() {
             List<Goal> goals = goalService.getAllGoals();
             return new ResponseEntity<>(goals, HttpStatus.OK);
         }
-        @PostMapping("/goal")
+        @PostMapping("/goals")
         public ResponseEntity<Goal> createGoal(@RequestBody CreateGoalRequest request) {
             Goal goal = goalService.createGoal(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(goal);
         }
-        @GetMapping("/goal/{id}")
+        @GetMapping("/goals/{id}")
         public ResponseEntity<Goal> getGoalById(@PathVariable Long id) {
             Goal goal = goalService.getGoalById(id);
             return new ResponseEntity<>(goal, HttpStatus.OK);
         }
-        @DeleteMapping("/goal/{id}")
+        @DeleteMapping("/goals/{id}")
         public ResponseEntity<HttpStatus> deleteGoal(@PathVariable Long id) {
             goalService.deleteGoal(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         // advanced goal
-        @GetMapping("/goal/user/{userId}")
+        @GetMapping("/goals/users/{userId}")
         public ResponseEntity<List<Goal>> getGoalsByUserId(@PathVariable("userId") Long userId) {
             List<Goal> goals = goalService.getGoalsByUserId(userId);
             return ResponseEntity.ok(goals);
@@ -111,7 +111,7 @@ public class UserController {
 
     // workout
 
-        @GetMapping("/workout")
+        @GetMapping("/workouts")
         public ResponseEntity<List<Workout>> getAllWorkouts() {
             List<Workout> workouts = workoutService.getAllWorkouts();
             return new ResponseEntity<>(workouts, HttpStatus.OK);
@@ -121,41 +121,41 @@ public class UserController {
 //            Workout savedWorkout = workoutService.saveWorkout(workout);
 //            return new ResponseEntity<>(savedWorkout, HttpStatus.CREATED);
 //        }
-        @PostMapping("/workout")
+        @PostMapping("/workouts")
         public ResponseEntity<Workout> createWorkout(@RequestBody CreateWorkoutRequest request) {
             Workout workout = workoutService.createWorkout(request);
             return ResponseEntity.status(HttpStatus.CREATED).body(workout);
         }
-        @GetMapping("/workout/{id}")
+        @GetMapping("/workouts/{id}")
         public ResponseEntity<Workout> getWorkoutById(@PathVariable Long id) {
             Workout workout = workoutService.getWorkoutById(id);
             return new ResponseEntity<>(workout, HttpStatus.OK);
         }
-        @PutMapping("/workout/{id}")
+        @PutMapping("/workouts/{id}")
         public ResponseEntity<Workout> updateWorkout(@PathVariable Long id, @RequestBody Workout workoutDetails) {
             Workout updatedWorkout = workoutService.updateWorkout(id, workoutDetails);
             return new ResponseEntity<>(updatedWorkout, HttpStatus.OK);
         }
-        @DeleteMapping("/workout/{id}")
+        @DeleteMapping("/workouts/{id}")
         public ResponseEntity<HttpStatus> deleteWorkout(@PathVariable Long id) {
             workoutService.deleteWorkout(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
         // workout-advanced
-        @GetMapping("/workout/user/{userId}")
+        @GetMapping("/workouts/users/{userId}")
         public ResponseEntity<List<Workout>> getWorkoutsByUserId(@PathVariable("userId") Long userId) {
             List<Workout> workouts = workoutService.getWorkoutsByUserId(userId);
             return ResponseEntity.ok(workouts);
         }
-        @GetMapping("/workout/user/{userId}/{date}")
+        @GetMapping("/workouts/users/{userId}/{date}")
         public ResponseEntity<List<Workout>> getWorkoutsByUserIdAndDate(
                 @PathVariable("userId") Long userId,
                 @PathVariable("date") LocalDate date) {
             List<Workout> workouts = workoutService.getWorkoutsByUserIdAndDate(userId, date);
             return ResponseEntity.ok(workouts);
         }
-        @GetMapping("/workout/{year}/{month}")
+        @GetMapping("/workouts/{year}/{month}")
         public ResponseEntity<List<Workout>> getAllWorkoutsByMonthAndYear(@PathVariable("year") int year, @PathVariable("month") int month) {
             try {
                 List<Workout> workouts = workoutService.getAllWorkoutsByMonthAndYear(year, month);
@@ -164,7 +164,7 @@ public class UserController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             }
         }
-        @GetMapping("/workout/count/{user_id}/{date}")
+        @GetMapping("/workouts/count/{user_id}/{date}")
         public ResponseEntity<Long> countWorkoutsByUserIdAndDate(
                 @PathVariable("user_id") Long userId,
                 @PathVariable("date") LocalDate date
@@ -172,7 +172,7 @@ public class UserController {
             long count = workoutService.countWorkoutsByUser_UserIdAndDate(userId, date);
             return ResponseEntity.ok(count);
         }
-        @GetMapping("/workout/sum-calories/{user_id}/{date}")
+        @GetMapping("/workouts/sum-calories/{user_id}/{date}")
         public ResponseEntity<BigDecimal> totalCaloriesBurnedByUserIdAndDateTime(
                 @PathVariable("user_id") Long userId,
                 @PathVariable("date") LocalDate date
@@ -180,7 +180,7 @@ public class UserController {
             BigDecimal sum = workoutService.sumCaloriesBurnedByUser_UserIdAndDate(userId, date);
             return ResponseEntity.ok(sum);
         }
-        @GetMapping("/workout/sum-distance/{user_id}/{date}")
+        @GetMapping("/workouts/sum-distance/{user_id}/{date}")
         public ResponseEntity<BigDecimal> totalDistanceByUserIdAndDateTime(
                 @PathVariable("user_id") Long userId,
                 @PathVariable("date") LocalDate date
@@ -188,7 +188,7 @@ public class UserController {
             BigDecimal sum = workoutService.sumDistanceByUser_UserIdAndDate(userId, date);
             return ResponseEntity.ok(sum);
         }
-        @GetMapping("/workout/total-time/{user_id}/{date}")
+        @GetMapping("/workouts/total-time/{user_id}/{date}")
         public ResponseEntity<String> calculateTotalTimeByUserIdAndDate(
                 @PathVariable("user_id") Long userId,
                 @PathVariable("date") LocalDate date
@@ -197,25 +197,25 @@ public class UserController {
             return ResponseEntity.ok(totalTime);
         }
 
-        @GetMapping("/workout/count/{user_id}")
+        @GetMapping("/workouts/count/{user_id}")
         public ResponseEntity<Long> countWorkoutsByUserId(@PathVariable("user_id") Long userId
         ) {
             long count = workoutService.countWorkoutsByUser_UserId(userId);
             return ResponseEntity.ok(count);
         }
-        @GetMapping("/workout/sum-calories/{user_id}")
+        @GetMapping("/workouts/sum-calories/{user_id}")
         public ResponseEntity<BigDecimal> totalCaloriesBurnedByUserId(@PathVariable("user_id") Long userId
         ) {
             BigDecimal sum = workoutService.sumCaloriesBurnedByUser_UserId(userId);
             return ResponseEntity.ok(sum);
         }
-        @GetMapping("/workout/sum-distance/{user_id}")
+        @GetMapping("/workouts/sum-distance/{user_id}")
         public ResponseEntity<BigDecimal> totalDistanceByUserId(@PathVariable("user_id") Long userId
         ) {
             BigDecimal sum = workoutService.sumDistanceByUser_UserId(userId);
             return ResponseEntity.ok(sum);
         }
-        @GetMapping("/workout/total-time/{user_id}")
+        @GetMapping("/workouts/total-time/{user_id}")
         public ResponseEntity<String> calculateTotalTimeByUserId(@PathVariable("user_id") Long userId
         ) {
             String totalTime = workoutService.calculateTotalTimeByUserId(userId);
@@ -229,7 +229,7 @@ public class UserController {
 //        }
     // report
 
-        @PostMapping("/report")
+        @PostMapping("/reports")
         public ResponseEntity<Report> createReport(@RequestBody Report report) {
             Report savedReport = reportService.saveReport(report);
             return new ResponseEntity<>(savedReport, HttpStatus.CREATED);
