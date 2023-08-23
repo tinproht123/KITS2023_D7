@@ -72,7 +72,16 @@ public class AuthController {
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
-                roles));
+                roles,
+                userDetails.getFirstName(),
+                userDetails.getLastName(),
+                userDetails.getCity(),
+                userDetails.getCountry(),
+                userDetails.getGender(),
+                userDetails.getBirthday(),
+                userDetails.getWeight(),
+                userDetails.getHeight(),
+                userDetails.getImage()));
     }
 
     @PostMapping("/signup")
@@ -88,6 +97,9 @@ public class AuthController {
                     .badRequest()
                     .body(new MessageResponse("Error: Email is already in use!"));
         }
+
+        // set default profile image
+        signUpRequest.setImage("https://storage.googleapis.com/fit-tracker-f6d77.appspot.com/2412eb25-c5cc-4964-ab33-b6373405038bpng");
         // Create new user's account
         User user = new User(
                 signUpRequest.getFirstName(),
@@ -98,7 +110,8 @@ public class AuthController {
                 signUpRequest.getBirthday(),
                 signUpRequest.getGender(),
                 signUpRequest.getCountry(),
-                signUpRequest.getCity()
+                signUpRequest.getCity(),
+                signUpRequest.getImage()
         );
 
         Set<String> strRoles = signUpRequest.getRole();
