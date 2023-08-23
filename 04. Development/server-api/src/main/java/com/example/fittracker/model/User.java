@@ -82,7 +82,7 @@ public class User {
     @DecimalMin("0.01")
     private BigDecimal height;
 
-    @Column(columnDefinition = "varchar(255) DEFAULT 'blank-profile-picture.png'")
+    @Column(columnDefinition = "varchar(255) default 'blank-profile-picture.png'")
     private String image;
 
     @OneToMany(mappedBy = "user")
@@ -96,7 +96,7 @@ public class User {
     )
     private List<User> friends = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserChallenge> challenges = new ArrayList<>();
 
     @ManyToMany(fetch = FetchType.LAZY)

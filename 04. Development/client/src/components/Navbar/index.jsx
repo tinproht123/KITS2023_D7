@@ -8,12 +8,17 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import StyledButton from "../StyledButton";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { grey } from "@mui/material/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { logout } from "../../store/features/authSlice";
 
 const navItems = [
   {
@@ -44,6 +49,23 @@ const navItems = [
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openDrop = Boolean(anchorEl);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const { isLogin, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Log Out Successfully!");
+    navigate("/auth/login");
+  };
 
   return (
     <>
@@ -59,14 +81,16 @@ const Navbar = () => {
       >
         <Box sx={{ width: "100%" }}>
           <Box height="60px"></Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <Link to="/auth/login">
-              <StyledButton mode="light">LOG IN</StyledButton>
-            </Link>
-            <Link to="/auth/signup">
-              <StyledButton mode="dark">SIGN UP</StyledButton>
-            </Link>
-          </Box>
+          {!isLogin && (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Link to="/auth/login">
+                <StyledButton mode="light">LOG IN</StyledButton>
+              </Link>
+              <Link to="/auth/signup">
+                <StyledButton mode="dark">SIGN UP</StyledButton>
+              </Link>
+            </Box>
+          )}
           {navItems.map((item, idx) => (
             <Accordion
               key={idx}
@@ -116,7 +140,7 @@ const Navbar = () => {
             width: "100%",
             maxWidth: { xs: "1920px", md: "1440px" },
             mx: "auto",
-            zIndex: { xs: 99, md: 10 },
+            zIndex: { xs: 9999, md: 10 },
           }}
         >
           <Toolbar
@@ -213,12 +237,56 @@ const Navbar = () => {
             <Box
               sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
             >
-              <Link to="/auth/login">
-                <StyledButton mode="light">LOG IN</StyledButton>
-              </Link>
-              <Link to="/auth/signup">
-                <StyledButton mode="dark">SIGN UP</StyledButton>
-              </Link>
+              {!isLogin ? (
+                <>
+                  <Link to="/auth/login">
+                    <StyledButton mode="light">LOG IN</StyledButton>
+                  </Link>
+                  <Link to="/auth/signup">
+                    <StyledButton mode="dark">SIGN UP</StyledButton>
+                  </Link>
+                </>
+              ) : (
+                <Box display="flex" position="relative">
+                  <Box
+                    onClick={handleClick}
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    borderRadius={999}
+                    width={50}
+                    height={50}
+                    cursor="pointer"
+                  >
+                    <img
+                      src={`/images/${
+                        user.image === undefined
+                          ? "blank-profile-picture.png"
+                          : user.image
+                      }`}
+                      width="100%"
+                    />
+                  </Box>
+                  <Menu
+                    open={openDrop}
+                    onClose={handleClose}
+                    anchorEl={anchorEl}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    <MenuItem onClick={handleLogout}>
+                      <Typography
+                        fontSize={16}
+                        color="#d2042d"
+                        fontWeight={500}
+                      >
+                        Log Out
+                      </Typography>
+                    </MenuItem>
+                  </Menu>
+                </Box>
+              )}
             </Box>
           </Toolbar>
         </AppBar>

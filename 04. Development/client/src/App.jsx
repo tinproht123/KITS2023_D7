@@ -125,7 +125,7 @@ function App() {
           rtl={false}
           pauseOnFocusLoss
           theme="light"
-          style={{ zIndex: 999 }}
+          style={{ zIndex: 99999 }}
         />
         <BrowserRouter>
           <Routes>
