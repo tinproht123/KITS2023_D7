@@ -1,9 +1,11 @@
 import { Box, Modal, Typography } from "@mui/material";
 import Header from "../../../../components/Header";
-import users from "../../../../mock/users";
 import { DataGrid } from "@mui/x-data-grid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getUsers } from "../../../../store/features/adminSlice";
+import Loading from "../../../../components/Loading";
 
 const Users = () => {
   const [open, setOpen] = useState(false);
@@ -13,8 +15,15 @@ const Users = () => {
     setOpen(false);
   };
 
+  const { users, isLoading } = useSelector((state) => state.admin);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUsers());
+  }, [dispatch]);
+
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "userId", headerName: "ID" },
     {
       field: "firstName",
       headerName: "First Name",
@@ -73,7 +82,7 @@ const Users = () => {
               width={"100%"}
               height={"100%"}
               style={{ objectFit: "cover" }}
-              src={`/images/${image}`}
+              src={`/${image}`}
               alt="image"
               onClick={() => {
                 setOpen(true);
@@ -87,7 +96,7 @@ const Users = () => {
     {
       field: "role",
       headerName: "Role",
-      renderCell: ({ row: { role } }) => {
+      renderCell: ({ row: { roles } }) => {
         return (
           <Box
             width="100%"
@@ -95,23 +104,29 @@ const Users = () => {
             p="5px"
             display="flex"
             alignItems="center"
-            backgroundColor={role === "admin" ? "#B22222" : "#228B22"}
+            backgroundColor={
+              roles[0].name === "ROLE_ADMIN" ? "#B22222" : "#228B22"
+            }
             borderRadius="4px"
           >
-            {role === "admin" && (
+            {roles[0].name === "ROLE_ADMIN" && (
               <FontAwesomeIcon icon="fa-solid fa-shield-halved" color="#fff" />
             )}
-            {role === "user" && (
+            {roles[0].name === "ROLE_USER" && (
               <FontAwesomeIcon icon="fa-solid fa-user" color="#fff" />
             )}
             <Typography ml={1} color="#fff">
-              {role}
+              {roles[0].name === "ROLE_ADMIN" ? "Admin" : "User"}
             </Typography>
           </Box>
         );
       },
     },
   ];
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Box m={1}>
@@ -120,7 +135,11 @@ const Users = () => {
         subtitle="Manage all FitTracker's users information"
       />
       <Box mt={4} height="75vh" backgroundColor="#fff">
-        <DataGrid rows={users} columns={columns} />
+        <DataGrid
+          rows={users}
+          columns={columns}
+          getRowId={(row) => row.userId}
+        />
       </Box>
 
       {/* MODAL  */}
@@ -138,7 +157,7 @@ const Users = () => {
         <Box maxWidth="600px" maxHeight="600px" display="flex">
           <img
             width="100%"
-            src={`/images/${imagePath}`}
+            src={`/${imagePath}`}
             style={{ objectFit: "cover" }}
           />
         </Box>

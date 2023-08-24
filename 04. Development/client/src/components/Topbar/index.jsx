@@ -8,7 +8,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logout } from "../../store/features/authSlice";
 
 const Topbar = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -19,6 +20,11 @@ const Topbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+  };
+
   return (
     <Box
       display="flex"
@@ -50,7 +56,7 @@ const Topbar = () => {
             "aria-labelledby": "basic-button",
           }}
         >
-          <MenuItem containerElement={<Link to="/auth/logout" />}>
+          <MenuItem onClick={handleLogout}>
             <Typography fontSize={16} color="#d2042d" fontWeight={500}>
               Log Out
             </Typography>
