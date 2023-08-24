@@ -1,0 +1,161 @@
+package com.example.fittracker.model;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import org.springframework.cglib.core.Local;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Data
+@Entity
+@Table(name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
+@AllArgsConstructor
+@NoArgsConstructor
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long userId;
+    @Column(nullable = false)
+    @NotEmpty(message = "First_name is not null")
+    private String firstName;
+
+    @Column(nullable = false)
+    @NotEmpty(message = "Last_name is not null")
+    private String lastName;
+
+    @Column(nullable = false)
+    private String username;
+
+    @Column(nullable = false)
+    @Email(message = "Invalid email format")
+    private String email;
+
+    @Column(nullable = false)
+    @NotEmpty(message = "Password is not null")
+//    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]+$")
+//    @Pattern(regexp = "^[a-zA-Z0-9]{8,16}$")
+//    @Pattern(regexp = "^[a-zA-Z0-9]{6,}$")
+    private String password;
+    private String token;
+    @Column
+    private String gender;
+
+    @Column
+    @Temporal(TemporalType.TIMESTAMP)
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime birthday;
+
+
+    @Column
+    private String city;
+
+    @Column
+    private String country;
+
+    //    @Column(nullable = false)
+    @DecimalMin("0.01")
+    private BigDecimal weight;
+
+//    @Column(nullable = false)
+    @DecimalMin("0.01")
+    private BigDecimal height;
+
+    @Column(columnDefinition = "varchar(255) default 'blank-profile-picture.png'")
+    private String image;
+
+    @Column(columnDefinition = "TIMESTAMP")
+    private LocalDateTime tokenCreationDate;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<User> friends = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<UserChallenge> challenges = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(  name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_achievements",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "achievement_id")
+    )
+    private List<Achievement> achievements = new ArrayList<>();
+
+
+//    public User(String firstName, String lastName, String username, String email, String password) {
+//    public User(String firstName, String lastName, String username, String email, String password, LocalDateTime birthday, String gender, String country, String city, String image) {
+//        this.firstName = firstName;
+//        this.lastName = lastName;
+//        this.username = username;
+//        this.email = email;
+//        this.password = password;
+//        this.birthday = LocalDate.parse(birthday, DateTimeFormatter.ISO_DATE).atStartOfDay();
+//        this.gender = gender;
+//        this.country = country;
+//        this.city = city;
+//        this.image = image;
+//    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public LocalDateTime getTokenCreationDate() {
+        return tokenCreationDate;
+    }
+
+    public void setTokenCreationDate(LocalDateTime tokenCreationDate) {
+        this.tokenCreationDate = tokenCreationDate;
+    }
+
+    public User(String firstName, String lastName, String username, String email, String password, LocalDateTime birthday, String gender, String country, String city, String image) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.country = country;
+        this.city = city;
+        this.image = image;
+    }
+}

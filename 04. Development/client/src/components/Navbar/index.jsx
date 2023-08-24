@@ -8,43 +8,89 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import StyledButton from "../StyledButton";
-import { NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { grey } from "@mui/material/colors";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { logout } from "../../store/features/authSlice";
 
 const navItems = [
   {
     to: "/workouts",
     text: "Workouts",
-    subs: ["Dashboard"],
+    subs: [
+      {
+        to: "/dashboard",
+        text: "Dashboard",
+      },
+    ],
   },
   {
     to: "/community",
     text: "Community",
-    subs: ["Activity Feed", "Challenges"],
+    subs: [
+      {
+        to: "/activity-feed",
+        text: "Activity Feed",
+      },
+      {
+        to: "/challenges",
+        text: "Challenges",
+      },
+    ],
   },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const openDrop = Boolean(anchorEl);
+  const handleClick = (e) => {
+    setAnchorEl(e.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const { isLogin, user } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    toast.success("Log Out Successfully!");
+    navigate("/auth/login");
+  };
+
   return (
     <>
       {/* DRAWER  */}
       <Drawer
-        sx={{ display: { md: "none" } }}
+        sx={{
+          display: { md: "none" },
+        }}
         anchor={"left"}
         open={open}
         mt="60px"
+        ModalProps={{ disableScrollLock: true }}
       >
         <Box sx={{ width: "100%" }}>
           <Box height="60px"></Box>
-          <Box sx={{ display: "flex", alignItems: "center" }}>
-            <StyledButton type="light">LOG IN</StyledButton>
-            <StyledButton type="dark">SIGN UP</StyledButton>
-          </Box>
+          {!isLogin && (
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Link to="/auth/login">
+                <StyledButton mode="light">LOG IN</StyledButton>
+              </Link>
+              <Link to="/auth/signup">
+                <StyledButton mode="dark">SIGN UP</StyledButton>
+              </Link>
+            </Box>
+          )}
           {navItems.map((item, idx) => (
             <Accordion
               key={idx}
@@ -76,7 +122,7 @@ const Navbar = () => {
                       "&:hover": { backgroundColor: grey[300] },
                     }}
                   >
-                    {sub}
+                    <Link to={sub.to}>{sub.text}</Link>
                   </Typography>
                 ))}
               </AccordionDetails>
@@ -94,7 +140,7 @@ const Navbar = () => {
             width: "100%",
             maxWidth: { xs: "1920px", md: "1440px" },
             mx: "auto",
-            zIndex: { xs: 9999, md: 0 },
+            zIndex: { xs: 9999, md: 10 },
           }}
         >
           <Toolbar
@@ -112,9 +158,9 @@ const Navbar = () => {
               onClick={() => setOpen((prev) => !prev)}
             >
               {open ? (
-                <FontAwesomeIcon icon="fa-solid fa-x" />
+                <FontAwesomeIcon icon="fa-solid fa-x" size="xs" />
               ) : (
-                <FontAwesomeIcon icon="fa-solid fa-bars" />
+                <FontAwesomeIcon icon="fa-solid fa-bars" size="xs" />
               )}
             </IconButton>
             <Box
@@ -123,7 +169,9 @@ const Navbar = () => {
                 textAlign: { xs: "center", md: "left" },
               }}
             >
-              <img src="/images/brand.svg" alt="logo" width="180px" />
+              <Link to="/">
+                <img src="/images/brand.svg" alt="logo" width="180px" />
+              </Link>
             </Box>
             <Box
               sx={{
@@ -147,13 +195,13 @@ const Navbar = () => {
                   <Typography
                     sx={{
                       fontWeight: "500",
-                      "& a": { textDecoration: "none" },
+                      "& a": { textDecoration: "none", color: "#000" },
                       "&:hover": {
                         fontWeight: "600",
                       },
                     }}
                   >
-                    <NavLink to={item.to}>{item.text}</NavLink>
+                    <Link to={item.to}>{item.text}</Link>
                   </Typography>
                   <Box
                     className="dropdown-subs"
@@ -163,7 +211,7 @@ const Navbar = () => {
                       backgroundColor: "#fff",
                       minWidth: "160px",
                       boxShadow: "0px 0px 5px 0px rgba(0,0,0,0.2)",
-                      zIndex: 1,
+                      zIndex: 99999,
                       borderRadius: "2px",
                       "& > a": {
                         textDecoration: "none",
@@ -178,9 +226,9 @@ const Navbar = () => {
                     }}
                   >
                     {item.subs.map((sub, index) => (
-                      <NavLink to="/" key={index}>
-                        {sub}
-                      </NavLink>
+                      <Link to={sub.to} key={index}>
+                        {sub.text}
+                      </Link>
                     ))}
                   </Box>
                 </Box>
@@ -189,8 +237,67 @@ const Navbar = () => {
             <Box
               sx={{ display: { xs: "none", md: "flex" }, alignItems: "center" }}
             >
-              <StyledButton type="light">LOG IN</StyledButton>
-              <StyledButton type="dark">SIGN UP</StyledButton>
+              {!isLogin ? (
+                <>
+                  <Link to="/auth/login">
+                    <StyledButton mode="light">LOG IN</StyledButton>
+                  </Link>
+                  <Link to="/auth/signup">
+                    <StyledButton mode="dark">SIGN UP</StyledButton>
+                  </Link>
+                </>
+              ) : (
+                <Box
+                  display="flex"
+                  position="relative"
+                  cursor="pointer"
+                  borderRadius={999}
+                >
+                  <Box
+                    onClick={handleClick}
+                    aria-controls={open ? "basic-menu" : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? "true" : undefined}
+                    borderRadius={999}
+                    width={50}
+                    height={50}
+                    cursor="pointer"
+                  >
+                    <img
+                      src={`/images/${
+                        user.image === null
+                          ? "blank-profile-picture.png"
+                          : user.image
+                      }`}
+                      width="100%"
+                      height="100%"
+                      style={{
+                        display: "block",
+                        objectFit: "cover",
+                        borderRadius: 999,
+                      }}
+                    />
+                  </Box>
+                  <Menu
+                    open={openDrop}
+                    onClose={handleClose}
+                    anchorEl={anchorEl}
+                    MenuListProps={{
+                      "aria-labelledby": "basic-button",
+                    }}
+                  >
+                    <MenuItem onClick={handleLogout}>
+                      <Typography
+                        fontSize={16}
+                        color="#d2042d"
+                        fontWeight={500}
+                      >
+                        Log Out
+                      </Typography>
+                    </MenuItem>
+                  </Menu>
+                </Box>
+              )}
             </Box>
           </Toolbar>
         </AppBar>

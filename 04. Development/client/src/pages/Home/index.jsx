@@ -1,9 +1,20 @@
 import { Box, Typography } from "@mui/material";
 import StyledButton from "../../components/StyledButton";
-import { NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 const HomePage = () => {
+  const { isLogin } = useSelector((state) => state.auth);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLogin) {
+      navigate("/dashboard");
+    }
+  }, [isLogin, navigate]);
   return (
     <Box sx={{ width: "95%", maxWidth: "1440px", marginInline: "auto" }}>
       {/* HEADER  */}
@@ -49,16 +60,18 @@ const HomePage = () => {
             Whether you’re training for a marathon or your biggest season yet,
             we’re here to help you make serious progress.
           </Typography>
-          <StyledButton
-            sx={{
-              width: "320px",
-              backgroundColor: { xs: "#000", md: "#fff" },
-              color: { xs: "#fff", md: "#000" },
-            }}
-            type="light"
-          >
-            SIGN UP
-          </StyledButton>
+          <Link to="/auth/signup">
+            <StyledButton
+              sx={{
+                width: "320px",
+                backgroundColor: { xs: "#000", md: "#fff" },
+                color: { xs: "#fff", md: "#000" },
+              }}
+              mode="light"
+            >
+              SIGN UP
+            </StyledButton>
+          </Link>
           <Typography
             variant="p"
             sx={{
@@ -69,7 +82,7 @@ const HomePage = () => {
             }}
             mt={2}
           >
-            Already a member? <NavLink>Log In</NavLink>
+            Already a member? <Link to="/auth/login">Log In</Link>
           </Typography>
         </Box>
       </Box>
@@ -117,12 +130,14 @@ const HomePage = () => {
               Easily track your Workouts, set Training Plans, and discover new
               Workout Routines to crush your goals.
             </Typography>
-            <StyledButton
-              sx={{ width: "320px", margin: "0px !important" }}
-              type="dark"
-            >
-              GET STARTED
-            </StyledButton>
+            <Link to="/auth/login">
+              <StyledButton
+                sx={{ width: "320px", margin: "0px !important" }}
+                mode="dark"
+              >
+                GET STARTED
+              </StyledButton>
+            </Link>
           </Box>
           <Box
             sx={{
@@ -143,7 +158,7 @@ const HomePage = () => {
               padding: "25px",
               borderRadius: "5px",
               display: "flex",
-              alignItems: { xs: "start", md: "end" },
+              alignItems: { xs: "start", md: "center" },
               flexDirection: { xs: "column", md: "row" },
             }}
           >
@@ -200,7 +215,7 @@ const HomePage = () => {
           >
             Hit milestones and PR’s by taking on a new challenge every month.
           </Typography>
-          <StyledButton sx={{ width: "280px" }} type="dark">
+          <StyledButton sx={{ width: "280px" }} mode="dark">
             JOIN A CHALLENGE
           </StyledButton>
         </Box>
