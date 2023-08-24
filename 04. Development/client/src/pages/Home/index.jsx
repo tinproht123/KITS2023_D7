@@ -2,8 +2,9 @@ import { Box, Typography } from "@mui/material";
 import StyledButton from "../../components/StyledButton";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSelector } from "react-redux";
+
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
   const { isLogin } = useSelector((state) => state.auth);
@@ -148,7 +149,7 @@ const HomePage = () => {
               },
             }}
           >
-            <img src="/images/img-1.png" alt="image" />
+            <img src="/images/img-11.png" alt="image" />
           </Box>
         </Box>
         <Box mt={10}>
@@ -174,7 +175,11 @@ const HomePage = () => {
                 },
               }}
             >
-              <img src="/images/img-2.jpg" width="100%" alt="challenge-image" />
+              <img
+                src="/images/img-12.jpg"
+                width="100%"
+                alt="challenge-image"
+              />
             </Box>
             <Box sx={{ padding: { xs: 0, md: 5 } }}>
               <Typography
@@ -277,7 +282,7 @@ const HomePage = () => {
             </Box>
           </Box>
           <Box>
-            <img src="/images/img-3.png" width="100%" alt="image" />
+            <img src="/images/img-13.png" width="100%" alt="image" />
           </Box>
         </Box>
       </Box>

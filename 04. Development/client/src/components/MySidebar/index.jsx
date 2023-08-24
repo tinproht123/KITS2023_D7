@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Box, IconButton, Typography } from "@mui/material";
 import { useState } from "react";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
+import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
 const Item = ({ title, icon, to, selected, setSelected }) => {
@@ -23,6 +24,8 @@ const MySidebar = () => {
 
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState(location.pathname);
+
+  const { user } = useSelector((state) => state.auth);
 
   return (
     <Sidebar collapsed={isCollapsed}>
@@ -61,7 +64,7 @@ const MySidebar = () => {
                   alt="profile-user"
                   width="100px"
                   height="100px"
-                  src={`/images/avatar.png`}
+                  src={user.image}
                   style={{
                     cursor: "pointer",
                     borderRadius: "50%",
@@ -76,7 +79,7 @@ const MySidebar = () => {
                   sx={{ m: "10px 0 0 0" }}
                   color="#d2042d"
                 >
-                  Khanh Tung
+                  {user.lastName + user.firstName}
                 </Typography>
               </Box>
             </Box>

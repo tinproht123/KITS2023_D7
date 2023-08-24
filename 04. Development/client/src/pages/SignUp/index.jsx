@@ -65,13 +65,12 @@ const SignUp = () => {
     event.preventDefault();
   };
 
-  const { isLogin, error } = useSelector((state) => state.auth);
-
+  const { error, isLogin } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
-  if (isLogin) {
-    navigate("/dashboard");
-  }
+  useEffect(() => {
+    if (isLogin) navigate("/dashboard");
+  }, [navigate, isLogin]);
 
   useEffect(() => {
     if (error !== null) {
@@ -98,8 +97,7 @@ const SignUp = () => {
         birthday: val.birthday.format("YYYY-MM-DD"),
       };
       try {
-        dispatch(signUp({ userData }));
-        navigate("/auth/login");
+        dispatch(signUp({ userData, navigate }));
       } catch (error) {
         toast.error(error);
       }

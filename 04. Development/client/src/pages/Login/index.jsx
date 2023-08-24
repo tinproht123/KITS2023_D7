@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import StyledButton from "../../components/StyledButton";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
 import { login } from "../../store/features/authSlice";
@@ -44,17 +44,20 @@ const Login = () => {
     },
   });
 
-  const { isLogin, user } = useSelector((state) => state.auth);
+  const { user, isLogin } = useSelector((state) => state.auth);
 
   const handleClickShowPassword = () => setShowPassword((prev) => !prev);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  if (isLogin) {
-    if (user.role === "ROLE_ADMIN") navigate("/admin");
-    else navigate("/dashboard");
-  }
+
+  useEffect(() => {
+    if (isLogin) {
+      if (user.role === "ROLE_ADMIN") navigate("/admin");
+      else navigate("/dashboard");
+    }
+  }, [isLogin, navigate, user, dispatch]);
 
   return (
     <Box

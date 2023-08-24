@@ -22,7 +22,6 @@ import { logout } from "../../store/features/authSlice";
 
 const navItems = [
   {
-    to: "/workouts",
     text: "Workouts",
     subs: [
       {
@@ -32,7 +31,6 @@ const navItems = [
     ],
   },
   {
-    to: "/community",
     text: "Community",
     subs: [
       {
@@ -57,7 +55,7 @@ const Navbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const { isLogin, user } = useSelector((state) => state.auth);
+  const { user, isLogin } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -247,55 +245,56 @@ const Navbar = () => {
                   </Link>
                 </>
               ) : (
-                <Box
-                  display="flex"
-                  position="relative"
-                  cursor="pointer"
-                  borderRadius={999}
-                >
+                <Box display="flex" alignItems="center">
+                  <Typography fontSize={18} fontWeight={700} mr={2}>
+                    {user.username}
+                  </Typography>
                   <Box
-                    onClick={handleClick}
-                    aria-controls={open ? "basic-menu" : undefined}
-                    aria-haspopup="true"
-                    aria-expanded={open ? "true" : undefined}
-                    borderRadius={999}
-                    width={50}
-                    height={50}
+                    display="flex"
+                    position="relative"
                     cursor="pointer"
+                    borderRadius={999}
                   >
-                    <img
-                      src={`/images/${
-                        user.image === null
-                          ? "blank-profile-picture.png"
-                          : user.image
-                      }`}
-                      width="100%"
-                      height="100%"
-                      style={{
-                        display: "block",
-                        objectFit: "cover",
-                        borderRadius: 999,
+                    <Box
+                      onClick={handleClick}
+                      aria-controls={open ? "basic-menu" : undefined}
+                      aria-haspopup="true"
+                      aria-expanded={open ? "true" : undefined}
+                      borderRadius={999}
+                      width={50}
+                      height={50}
+                      cursor="pointer"
+                    >
+                      <img
+                        src={`${user.image}`}
+                        width="100%"
+                        height="100%"
+                        style={{
+                          display: "block",
+                          objectFit: "cover",
+                          borderRadius: 999,
+                        }}
+                      />
+                    </Box>
+                    <Menu
+                      open={openDrop}
+                      onClose={handleClose}
+                      anchorEl={anchorEl}
+                      MenuListProps={{
+                        "aria-labelledby": "basic-button",
                       }}
-                    />
+                    >
+                      <MenuItem onClick={handleLogout}>
+                        <Typography
+                          fontSize={16}
+                          color="#d2042d"
+                          fontWeight={500}
+                        >
+                          Log Out
+                        </Typography>
+                      </MenuItem>
+                    </Menu>
                   </Box>
-                  <Menu
-                    open={openDrop}
-                    onClose={handleClose}
-                    anchorEl={anchorEl}
-                    MenuListProps={{
-                      "aria-labelledby": "basic-button",
-                    }}
-                  >
-                    <MenuItem onClick={handleLogout}>
-                      <Typography
-                        fontSize={16}
-                        color="#d2042d"
-                        fontWeight={500}
-                      >
-                        Log Out
-                      </Typography>
-                    </MenuItem>
-                  </Menu>
                 </Box>
               )}
             </Box>

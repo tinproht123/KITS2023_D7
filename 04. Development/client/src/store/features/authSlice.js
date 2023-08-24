@@ -8,34 +8,20 @@ const API = `${BASE_API}/api/auth`;
 
 const initialState = {
   isLoading: false,
-  user: {
-    username: "",
-    firstName: "",
-    lastName: "",
-    email: "",
-    birthday: "",
-    gender: "",
-    country: "",
-    city: "",
-    weight: null,
-    height: null,
-    image: "",
-    role: "",
-  },
+  user: {},
   error: null,
   isLogin: false,
 };
 
 export const signUp = createAsyncThunk(
   "auth/signUp",
-  async ({ userData }, { rejectWithValue }) => {
+  async ({ userData, navigate }, { rejectWithValue }) => {
     try {
       const res = await axios.post(`${API}/signup`, userData);
       toast.success("Sign Up Successfully!");
-
+      navigate("/auth/login");
       return res.data;
     } catch (error) {
-      console.log(rejectWithValue(error.response.data.message));
       return rejectWithValue(error.response.data.message);
     }
   }
@@ -48,6 +34,20 @@ export const login = createAsyncThunk(
       const res = await axios.post(`${API}/signin`, loginData);
       toast.success("Log In Successfully!");
       localStorage.setItem("token", res.data.token);
+      const user = {};
+      user.username = res.data.username;
+      user.firstName = res.data.firstName;
+      user.lastName = res.data.lastName;
+      user.email = res.data.email;
+      user.birthday = dayjs(res.data.birthday).format("YYYY-MM-DD");
+      user.gender = res.data.gender;
+      user.country = res.data.country;
+      user.city = res.data.city;
+      user.weight = res.data.weight;
+      user.height = res.data.height;
+      user.image = res.data.image;
+      user.role = res.data.roles[0];
+      localStorage.setItem("user", JSON.stringify(user));
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -60,9 +60,14 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     logout: (state) => {
-      state.isLogin = false;
       state.user = {};
-      localStorage.removeItem("token");
+      state.isLogin = false;
+    },
+    loadUserData: (state) => {
+      state.user = JSON.parse(localStorage.getItem("user"));
+    },
+    setIsLogin: (state) => {
+      state.isLogin = localStorage.getItem("token") !== null;
     },
   },
   extraReducers: (builder) => {
@@ -70,7 +75,6 @@ const authSlice = createSlice({
       .addCase(signUp.pending, (state) => {
         state.isLoading = true;
         state.error = null;
-        state.isLogin = false;
       })
       .addCase(signUp.fulfilled, (state) => {
         state.isLoading = false;
@@ -82,15 +86,17 @@ const authSlice = createSlice({
       .addCase(login.pending, (state) => {
         state.isLoading = true;
         state.error = null;
-        state.isLogin = false;
       })
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.isLogin = true;
         state.user.username = action.payload.username;
         state.user.firstName = action.payload.firstName;
         state.user.lastName = action.payload.lastName;
         state.user.email = action.payload.email;
-        state.user.birthday = dayjs(action.payload.birthday, "YYYY-MM-DD");
+        state.user.birthday = dayjs(action.payload.birthday).format(
+          "YYYY-MM-DD"
+        );
         state.user.gender = action.payload.gender;
         state.user.country = action.payload.country;
         state.user.city = action.payload.city;
@@ -98,7 +104,6 @@ const authSlice = createSlice({
         state.user.height = action.payload.height;
         state.user.image = action.payload.image;
         state.user.role = action.payload.roles[0];
-        state.isLogin = true;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -108,4 +113,4 @@ const authSlice = createSlice({
 });
 
 export default authSlice.reducer;
-export const { logout } = authSlice.actions;
+export const { logout, loadUserData, setIsLogin } = authSlice.actions;

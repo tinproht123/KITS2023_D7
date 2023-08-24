@@ -127,13 +127,13 @@ public class User {
 //        this.image = image;
 //    }
 
-    public User(String firstName, String lastName, String username, String email, String password, LocalDateTime birthday, String gender, String country, String city, String image) {
+    public User(String firstName, String lastName, String username, String email, String password, String birthday, String gender, String country, String city, String image) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
         this.email = email;
         this.password = password;
-        this.birthday = birthday;
+        this.birthday = LocalDate.parse(birthday, DateTimeFormatter.ISO_DATE).atStartOfDay();
         this.gender = gender;
         this.country = country;
         this.city = city;

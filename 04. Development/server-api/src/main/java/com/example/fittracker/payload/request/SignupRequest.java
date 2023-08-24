@@ -12,7 +12,7 @@ public class SignupRequest {
     private String lastName;
     private String email;
     private String password;
-    private LocalDateTime birthday;
+    private String birthday;
     private String country;
     private String city;
     private String gender;

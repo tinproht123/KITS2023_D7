@@ -3,16 +3,23 @@ import MySidebar from "../../MySidebar";
 
 import { Box } from "@mui/material";
 import Topbar from "../../Topbar";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 
 const AdminLayout = () => {
-  const { user } = useSelector((state) => state.auth);
+  const { user, isLogin } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/auth/login");
+    }
+  }, [navigate, isLogin]);
 
   useEffect(() => {
     if (user.role !== "ROLE_ADMIN") navigate("/dashboard");
-  });
+  }, [navigate, dispatch, user]);
 
   return (
     <Box
