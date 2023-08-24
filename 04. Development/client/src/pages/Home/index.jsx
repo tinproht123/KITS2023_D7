@@ -21,7 +21,7 @@ const HomePage = () => {
       {/* HEADER  */}
       <Box position="relative">
         <img
-          src="/images/bg.webp"
+          src="/bg.webp"
           style={{
             objectFit: "fill",
             width: "100%",
@@ -149,7 +149,7 @@ const HomePage = () => {
               },
             }}
           >
-            <img src="/images/img-11.png" alt="image" />
+            <img src="/img-11.png" alt="image" />
           </Box>
         </Box>
         <Box mt={10}>
@@ -175,11 +175,7 @@ const HomePage = () => {
                 },
               }}
             >
-              <img
-                src="/images/img-12.jpg"
-                width="100%"
-                alt="challenge-image"
-              />
+              <img src="/img-12.jpg" width="100%" alt="challenge-image" />
             </Box>
             <Box sx={{ padding: { xs: 0, md: 5 } }}>
               <Typography
@@ -282,7 +278,7 @@ const HomePage = () => {
             </Box>
           </Box>
           <Box>
-            <img src="/images/img-13.png" width="100%" alt="image" />
+            <img src="/img-13.png" width="100%" alt="image" />
           </Box>
         </Box>
       </Box>

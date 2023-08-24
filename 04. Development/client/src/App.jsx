@@ -51,7 +51,7 @@ import AdminDashboard from "./pages/admin/General/Dashboard";
 import Activities from "./pages/admin/Data/Activities";
 import CommunityPosts from "./pages/admin/Data/CommunityPosts";
 import Users from "./pages/admin/Data/Users";
-import Achivements from "./pages/admin/Data/Achivements";
+import Achievements from "./pages/admin/Data/Achievements";
 import ActivityForm from "./pages/admin/Form/ActivityForm";
 import AchivementForm from "./pages/admin/Form/AchivementForm";
 import Dashboard from "./pages/Dashboard";
@@ -136,7 +136,7 @@ function App() {
               <Route path="activities" element={<Activities />} />
               <Route path="community-posts" element={<CommunityPosts />} />
               <Route path="challenges" element={<Challenges />} />
-              <Route path="achivements" element={<Achivements />} />
+              <Route path="achivements" element={<Achievements />} />
               <Route path="activity-form" element={<ActivityForm />} />
               <Route path="achivement-form" element={<AchivementForm />} />
             </Route>
