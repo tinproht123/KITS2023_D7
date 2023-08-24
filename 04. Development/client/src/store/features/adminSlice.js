@@ -5,6 +5,7 @@ import BASE_API from "../../mock/api";
 const initialState = {
   isLoading: false,
   activities: [],
+  achievements: [],
   users: [],
   error: null,
 };
@@ -31,7 +32,24 @@ export const getActivities = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get(`${BASE_API}/api/activities`, {
+      const res = await axios.get(`${BASE_API}/api/admin/activities`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.message);
+    }
+  }
+);
+
+export const getAchievements = createAsyncThunk(
+  "admin/getAchievements",
+  async (_, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${BASE_API}/api/admin/achievements`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -49,7 +67,7 @@ const adminSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      //GET /api/activities
+      //GET /api/admin/activities
       .addCase(getActivities.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -72,6 +90,19 @@ const adminSlice = createSlice({
         state.users = action.payload;
       })
       .addCase(getUsers.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      //GET /api/admin/achievements
+      .addCase(getAchievements.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(getAchievements.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.achievements = action.payload;
+      })
+      .addCase(getAchievements.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

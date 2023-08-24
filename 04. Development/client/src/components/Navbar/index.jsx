@@ -168,7 +168,7 @@ const Navbar = () => {
               }}
             >
               <Link to="/">
-                <img src="/images/brand.svg" alt="logo" width="180px" />
+                <img src="/brand.svg" alt="logo" width="180px" />
               </Link>
             </Box>
             <Box

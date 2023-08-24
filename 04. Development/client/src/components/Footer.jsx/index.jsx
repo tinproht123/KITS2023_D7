@@ -85,11 +85,7 @@ const Footer = () => {
           "& > p": { fontSize: "14px", letterSpacing: 2, marginLeft: 1 },
         }}
       >
-        <img
-          src="/images/logo-white.png"
-          alt="fit tracker brand"
-          width="40px"
-        />
+        <img src="/logo-white.png" alt="fit tracker brand" width="40px" />
         <Typography>@2023 FitTracker D7 KTITS</Typography>
 
         <Typography>
