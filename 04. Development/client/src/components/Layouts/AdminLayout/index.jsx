@@ -34,7 +34,6 @@ const AdminLayout = () => {
         sx={{
           width: "100%",
           minHeight: "100%",
-          border: "2px solid blue",
           backgroundColor: "#f1f1f1",
         }}
       >

@@ -30,7 +30,6 @@ const MySidebar = () => {
   return (
     <Sidebar collapsed={isCollapsed}>
       <Box
-        border="1px solid red"
         height="100%"
         display="flex"
         flexDirection="column"
