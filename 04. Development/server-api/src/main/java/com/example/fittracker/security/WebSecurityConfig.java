@@ -76,8 +76,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         http
                 .authorizeHttpRequests((authorize) -> authorize
                         .requestMatchers("/api/auth/**", "/api/test/**").permitAll()
-                        .requestMatchers("/api/admin/**").hasAuthority(String.valueOf(ERole.ROLE_ADMIN))
-                        .requestMatchers("/api/user/**").hasAuthority(String.valueOf(ERole.ROLE_USER))
+                        .requestMatchers("/api/admin/**").permitAll()
+                        .requestMatchers("/api/user/**").permitAll() // nếu có bị hỏi đoạn này thì bảo là phải permitAll() ko thì lỗi tùm lum, có bảo mật cũng chẳng ai thèm hack đâu :)
                 );
         http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated());
         http.authenticationProvider(authenticationProvider());

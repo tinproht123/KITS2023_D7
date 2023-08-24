@@ -16,7 +16,7 @@ const Footer = () => {
         }}
       >
         <Box sx={{ textAlign: { xs: "center", sm: "left" } }}>
-          <img src="/images/brand.svg" alt="fit tracker brand" width="180px" />
+          <img src="/brand.svg" alt="fit tracker brand" width="180px" />
         </Box>
         <Box
           sx={{

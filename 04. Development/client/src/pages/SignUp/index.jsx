@@ -125,6 +125,7 @@ const SignUp = () => {
       </Typography>
       <form onSubmit={formik.handleSubmit} style={{ textAlign: "left" }}>
         <TextField
+          required
           fullWidth
           id="username"
           label="Username"
@@ -136,6 +137,7 @@ const SignUp = () => {
           sx={{ marginBottom: "20px" }}
         />
         <TextField
+          required
           fullWidth
           id="firstName"
           label="First Name"
@@ -147,6 +149,7 @@ const SignUp = () => {
           sx={{ marginBottom: "20px" }}
         />
         <TextField
+          required
           fullWidth
           id="lastName"
           label="Last Name"
@@ -159,6 +162,7 @@ const SignUp = () => {
         />
         <TextField
           fullWidth
+          required
           label="Email"
           id="email"
           type="email"
@@ -170,6 +174,7 @@ const SignUp = () => {
           sx={{ marginBottom: "20px" }}
         />
         <FormControl
+          required
           fullWidth
           variant="outlined"
           sx={{ marginBottom: "20px" }}
@@ -218,6 +223,7 @@ const SignUp = () => {
           sx={{ width: "100%", marginBottom: "20px" }}
           slotProps={{
             textField: {
+              required: true,
               variant: "outlined",
               error: formik.touched.birthday && Boolean(formik.errors.birthday),
               helperText: formik.touched.birthday && formik.errors.birthday,
@@ -225,6 +231,7 @@ const SignUp = () => {
           }}
         />
         <TextField
+          required
           fullWidth
           select
           id="gender"
@@ -241,6 +248,7 @@ const SignUp = () => {
           <MenuItem value={"female"}>Female</MenuItem>
         </TextField>
         <TextField
+          required
           fullWidth
           select
           id="country"
@@ -258,6 +266,7 @@ const SignUp = () => {
           ))}
         </TextField>
         <TextField
+          required
           fullWidth
           id="city"
           label="City"
