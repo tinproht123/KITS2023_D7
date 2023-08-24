@@ -8,6 +8,7 @@ import com.example.fittracker.repository.UserRepository;
 import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ import java.util.UUID;
 public class UserService {
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @Autowired
     private UserFriendsRepository userFriendsRepository;
     public List<User> getAllUsers() {
@@ -72,6 +75,8 @@ public class UserService {
         User user = userOptional.get();
 
         user.setPassword(password);
+        String newPassword = passwordEncoder.encode(user.getPassword());
+        user.setPassword(newPassword);
         user.setToken(null);
         user.setTokenCreationDate(null);
 
