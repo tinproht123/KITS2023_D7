@@ -31,8 +31,8 @@ const Dashboard = () => {
 
   const columns = [
     {
-      field: "timeStart",
-      headerName: "Date",
+      field: "workoutId",
+      headerName: "ID",
     },
     {
       field: "activity",
@@ -88,6 +88,13 @@ const Dashboard = () => {
       field: "caloriesBurned",
       headerName: "Calories Burned",
       flex: 1,
+    },
+    {
+      field: "details",
+      headerName: "#",
+      renderCell: ({ row: { workoutId } }) => {
+        return <Link to={`/workouts/${workoutId}`}>Details</Link>;
+      },
     },
   ];
 

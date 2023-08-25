@@ -58,6 +58,8 @@ import Dashboard from "./pages/Dashboard";
 import AddWorkout from "./pages/AddWorkout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import WorkoutDetails from "./pages/WorkoutDetails";
+import ChallengesData from "./pages/admin/Data/ChallengesData";
 
 library.add(
   faPersonRunning,
@@ -135,7 +137,7 @@ function App() {
               <Route path="users" element={<Users />} />
               <Route path="activities" element={<Activities />} />
               <Route path="community-posts" element={<CommunityPosts />} />
-              <Route path="challenges" element={<Challenges />} />
+              <Route path="challenges" element={<ChallengesData />} />
               <Route path="achivements" element={<Achievements />} />
               <Route path="activity-form" element={<ActivityForm />} />
               <Route path="achivement-form" element={<AchivementForm />} />
@@ -152,6 +154,7 @@ function App() {
               <Route path="challenges" element={<Challenges />} />
               <Route path="people/friends" element={<Friends />} />
               <Route path="add-workout" element={<AddWorkout />} />
+              <Route path="workouts/:workoutId" element={<WorkoutDetails />} />
               <Route path="*" element={<Page_404 />} />
             </Route>
           </Routes>

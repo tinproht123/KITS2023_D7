@@ -319,7 +319,7 @@ const AddWorkout = () => {
             )}
             <Box display="flex" gap="20px" mb={"20px"}>
               <TextField
-                label="Calories Burned (cal)"
+                label="Calories Burned (kal)"
                 value={caloriesBurned}
                 placeholder="m/s"
                 InputProps={{ readOnly: true }}
