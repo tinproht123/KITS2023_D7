@@ -3,8 +3,11 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import Loading from "../../components/Loading";
+import { getWorkouts } from "../../store/features/userSlice";
 
 const Dashboard = () => {
   const [monthly, setMonthly] = useState(dayjs().format("MMM YYYY"));
@@ -14,6 +17,9 @@ const Dashboard = () => {
     const prevMonth = parsedDate.subtract(1, "month");
     setMonthly(prevMonth.format("MMM YYYY"));
   };
+
+  const dispatch = useDispatch();
+  const { workouts, isLoading, error } = useSelector((state) => state.user);
   const { isLogin } = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
@@ -70,10 +76,24 @@ const Dashboard = () => {
   ];
 
   useEffect(() => {
+    dispatch(getWorkouts());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (error !== null) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  useEffect(() => {
     if (!isLogin) {
       navigate("/auth/login");
     }
   }, [isLogin, navigate]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <Box p={10}>
@@ -131,7 +151,11 @@ const Dashboard = () => {
           </Button>
         </Box>
         <Box mt={4} height="75vh">
-          <DataGrid rows={[]} columns={columns} sx={{ textAlign: "center" }} />
+          <DataGrid
+            rows={workouts}
+            columns={columns}
+            sx={{ textAlign: "center" }}
+          />
         </Box>
       </Box>
     </Box>
