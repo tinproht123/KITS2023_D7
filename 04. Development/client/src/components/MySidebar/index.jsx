@@ -78,7 +78,7 @@ const MySidebar = () => {
                   sx={{ m: "10px 0 0 0" }}
                   color="#d2042d"
                 >
-                  {user.lastName + user.firstName}
+                  {user.lastName + " " + user.firstName}
                 </Typography>
               </Box>
             </Box>
