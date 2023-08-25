@@ -60,6 +60,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import WorkoutDetails from "./pages/WorkoutDetails";
 import ChallengesData from "./pages/admin/Data/ChallengesData";
+import Stats from "./pages/Stats";
 
 library.add(
   faPersonRunning,
@@ -155,6 +156,7 @@ function App() {
               <Route path="people/friends" element={<Friends />} />
               <Route path="add-workout" element={<AddWorkout />} />
               <Route path="workouts/:workoutId" element={<WorkoutDetails />} />
+              <Route path="user/stats/:userId" element={<Stats />} />
               <Route path="*" element={<Page_404 />} />
             </Route>
           </Routes>
