@@ -20,7 +20,7 @@ const Page_404 = () => {
       >
         404 Page Not Found!
       </Typography>
-      <img src="/images/chika.svg" width="300px" alt="chika chika dance" />
+      <img src="/chika.svg" width="300px" alt="chika chika dance" />
     </Box>
   );
 };
