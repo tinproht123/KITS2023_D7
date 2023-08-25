@@ -35,6 +35,7 @@ export const login = createAsyncThunk(
       toast.success("Log In Successfully!");
       localStorage.setItem("token", res.data.token);
       const user = {};
+      user.id = res.data.id;
       user.username = res.data.username;
       user.firstName = res.data.firstName;
       user.lastName = res.data.lastName;
@@ -90,6 +91,9 @@ const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isLogin = true;
+
+        //get user data
+        state.user.id = action.payload.id;
         state.user.username = action.payload.username;
         state.user.firstName = action.payload.firstName;
         state.user.lastName = action.payload.lastName;

@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import BASE_API from "../../mock/api";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const initialState = {
   isLoading: false,
@@ -27,7 +28,7 @@ export const getWorkouts = createAsyncThunk(
 
 export const createWorkout = createAsyncThunk(
   "user/createWorkout",
-  async ({ workoutData }, { rejectWithValue }) => {
+  async ({ workoutData, navigate }, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.post(`${BASE_API}/api/workouts`, workoutData, {
@@ -35,6 +36,8 @@ export const createWorkout = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
+      toast.success("New workout created successfully!");
+      navigate("/dashboard");
       return res.data;
     } catch (error) {
       return rejectWithValue(error.response.data.message);
@@ -57,6 +60,18 @@ const userSlice = createSlice({
         state.workouts = action.payload;
       })
       .addCase(getWorkouts.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      .addCase(createWorkout.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(createWorkout.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.workouts.add(action.payload);
+      })
+      .addCase(createWorkout.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });
