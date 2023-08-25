@@ -29,14 +29,6 @@ const Dashboard = () => {
     setMonthly(nextMonth.format("MMM YYYY"));
   };
 
-  const calculateDuration = (start, end) => {
-    const startDate = dayjs(start); // Replace with your date
-    const endDate = dayjs(end);
-
-    const duration = endDate.diff(startDate, "hour");
-    return duration;
-  };
-
   const columns = [
     {
       field: "timeStart",
@@ -46,21 +38,45 @@ const Dashboard = () => {
       field: "activity",
       headerName: "Activity",
       flex: 1,
+      renderCell: ({ row: { activity } }) => {
+        const { image, name } = activity;
+        return (
+          <Box display="flex" alignItems={"center"}>
+            <Box sx={{ width: "20px", height: "20px" }}>
+              <img
+                src={`/activities/${image}`}
+                style={{ display: "block", width: "100%", height: "100%" }}
+              />
+            </Box>
+            <Typography ml={1}>{name}</Typography>
+          </Box>
+        );
+      },
     },
     {
       field: "distance",
       headerName: "Distance",
-      renderField: ({ row: distance }) => {
-        return <Typography>{distance} km</Typography>;
+      renderCell: ({ row: { distance } }) => {
+        return (
+          <Typography>{distance === 1 ? null : `${distance} km`}</Typography>
+        );
       },
       flex: 1,
     },
     {
-      field: "duration",
-      headerName: "Duration",
+      field: "timeStart",
+      headerName: "Time start",
       flex: 1,
-      valueGetter: (params) => {
-        calculateDuration(params.row.timeStart, params.row.timeEnd);
+      renderCell: ({ row: { timeStart } }) => {
+        return <span>{dayjs(timeStart).format("YYYY-MM-DD HH:mm:ss")}</span>;
+      },
+    },
+    {
+      field: "timeEnd",
+      headerName: "Time end",
+      flex: 1,
+      renderCell: ({ row: { timeEnd } }) => {
+        return <span>{dayjs(timeEnd).format("YYYY-MM-DD HH:mm:ss")}</span>;
       },
     },
     {
@@ -69,7 +85,7 @@ const Dashboard = () => {
       flex: 1,
     },
     {
-      field: "calories_burned",
+      field: "caloriesBurned",
       headerName: "Calories Burned",
       flex: 1,
     },
@@ -155,6 +171,7 @@ const Dashboard = () => {
             rows={workouts}
             columns={columns}
             sx={{ textAlign: "center" }}
+            getRowId={(row) => row.workoutId}
           />
         </Box>
       </Box>

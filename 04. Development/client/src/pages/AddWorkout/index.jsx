@@ -1,10 +1,4 @@
-import {
-  Box,
-  TextField,
-  MenuItem,
-  Button,
-  TextareaAutosize,
-} from "@mui/material";
+import { Box, TextField, MenuItem, Button } from "@mui/material";
 import { DatePicker, TimePicker } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { useFormik } from "formik";
@@ -13,10 +7,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { getActivities } from "../../store/features/adminSlice";
+import { createWorkout } from "../../store/features/userSlice";
 
 const AddWorkout = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { activities } = useSelector((state) => state.admin);
+  const { user, isLogin } = useSelector((state) => state.auth);
 
   const [chosenActivity, setChosenActivity] = useState(null);
   const [duration, setDuration] = useState(null);
@@ -37,7 +34,7 @@ const AddWorkout = () => {
       .string()
       .oneOf(activities.map((activity) => activity.name))
       .required("Select your workout&apos;s activity"),
-    distance: yup.number().required("Distance is required"),
+    distance: yup.number().nullable(),
     note: yup.string(),
   });
 
@@ -54,7 +51,26 @@ const AddWorkout = () => {
     },
     validationSchema,
     onSubmit: (val) => {
-      const workoutData = {};
+      const workoutData = {
+        name: val.name,
+        timeStart:
+          dayjs(val.dateStart).format("YYYY-MM-DD") +
+          "T" +
+          dayjs(val.hourStart).format("HH:mm:ss"),
+        timeEnd:
+          dayjs(val.dateEnd).format("YYYY-MM-DD") +
+          "T" +
+          dayjs(val.hourEnd).format("HH:mm:ss"),
+        activityId: chosenActivity.activityId,
+        dateTime: dayjs(Date.now()).format("YYYY-MM-DDTHH:ss:mm"),
+        userId: user.id,
+        distance: val.distance === null ? 1 : val.distance,
+        note: val.note,
+      };
+
+      console.log(workoutData);
+
+      dispatch(createWorkout({ workoutData, navigate }));
     },
   });
 
@@ -107,6 +123,12 @@ const AddWorkout = () => {
     }
     setCaloriesBurned(res.toFixed(2));
   };
+
+  useEffect(() => {
+    if (!isLogin) {
+      navigate("/auth/login");
+    }
+  });
 
   useEffect(() => {
     setChosenActivity(
@@ -262,7 +284,6 @@ const AddWorkout = () => {
             {chosenActivity?.type === "no-gym" && (
               <>
                 <TextField
-                  required
                   size="small"
                   id="distance"
                   label="Distance (km)"
