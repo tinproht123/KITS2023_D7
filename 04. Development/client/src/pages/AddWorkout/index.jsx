@@ -38,8 +38,6 @@ const AddWorkout = () => {
       .oneOf(activities.map((activity) => activity.name))
       .required("Select your workout&apos;s activity"),
     distance: yup.number().required("Distance is required"),
-    pace: yup.number(),
-    caloriesBurned: yup.number(),
     note: yup.string(),
   });
 
@@ -52,15 +50,11 @@ const AddWorkout = () => {
       dateEnd: dayjs(),
       activity: "",
       distance: null,
-      pace,
-      caloriesBurned,
       note: "",
     },
     validationSchema,
     onSubmit: (val) => {
-      const workoutData = {
-        
-      }
+      const workoutData = {};
     },
   });
 
@@ -109,7 +103,7 @@ const AddWorkout = () => {
       const timeString = duration;
       const arr = timeString.split(":");
 
-      res = chosenActivity.met * parseInt(arr[0]) * 100;
+      res = chosenActivity.met * parseInt(arr[0]) * 10;
     }
     setCaloriesBurned(res.toFixed(2));
   };
