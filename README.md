@@ -24,5 +24,5 @@
 ### Database
 - MariaDb
 
-### Award
+## Awards
 - Wins the "Best Team Project" award at KITS 2023
