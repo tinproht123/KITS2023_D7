@@ -25,4 +25,4 @@
 - MariaDb
 
 ### Award
-- Win the "Best Team Project" award at KITS 2023
+- Wins the "Best Team Project" award at KITS 2023
