@@ -1,5 +1,5 @@
 # FitTracker 2023
-- A team project for final test in KITS 2023
+- A team project for final test at KITS 2023
 ### Description
 - FitTracker is a web application that helps users create a schedule of workouts and stay on track with their stats. It also offers a better way to work out efficiently. Join the community and connect with others by sharing your results on the newsfeed.
 ## Team
