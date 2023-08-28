@@ -26,3 +26,6 @@
 
 ## Awards
 - Wins the "Best Team Project" award at KITS 2023
+
+##
+- If you want any information about project, any feedbacks and question, you can contact me: https://www.facebook.com/profile.php?id=100009958477102
