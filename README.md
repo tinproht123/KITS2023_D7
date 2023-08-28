@@ -28,6 +28,6 @@
 - Wins the "Best Team Project" award at KITS 2023
 
 ##
-If you want any information about project, any feedbacks and question, you can contact me: 
+If you want any information about the project, any feedback, or have any questions, you can contact me at: 
 - Facebook: https://www.facebook.com/profile.php?id=100009958477102
 - Email: tinproht123@gmail.com
