@@ -1,5 +1,6 @@
 # FitTracker 2023
 - A team project for final test at KITS 2023
+- Completed: 77%
   
 ## Description
 - FitTracker is a web application that helps users create a schedule of workouts and stay on track with their stats. It also offers a better way to work out efficiently. Join the community and connect with others by sharing your results on the newsfeed.
@@ -33,9 +34,6 @@
 
 ## Awards
 - Wins the "Best Team Project" award at KITS 2023
-
-## Complete progress
-- 77%
 
 ##
 If you want any information about the project, any feedback, or have any questions, please feel free to contact me at: 
